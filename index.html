@@ -267,6 +267,40 @@
       .budget-table { box-shadow: none; }
     }
   </style>
+  <script> 
+    (function () {
+      const container = document.getElementById('wbs-tabs');
+      if (!container) return;
+      const tabs = [...container.querySelectorAll('[role="tab"]')];
+      const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+    
+      function activate(idx, pushHash=false) {
+        tabs.forEach((t,i)=> {
+          const on = i===idx;
+          t.setAttribute('aria-selected', on);
+          panels[i].hidden = !on;
+        });
+        if (pushHash) history.replaceState(null,'','#'+panels[idx].id);
+        tabs[idx].focus();
+      }
+      tabs.forEach((tab,i)=>{
+        tab.addEventListener('click',()=>activate(i,true));
+        tab.addEventListener('keydown',e=>{
+          const k=e.key;
+          let j=i;
+          if (k==='ArrowRight') j=(i+1)%tabs.length;
+          else if (k==='ArrowLeft') j=(i-1+tabs.length)%tabs.length;
+          else if (k==='Home') j=0;
+          else if (k==='End') j=tabs.length-1;
+          else return;
+          e.preventDefault(); activate(j,true);
+        });
+      });
+// Open the tab from URL hash (e.g., #panel-d4)
+      const fromHash = panels.findIndex(p => '#'+p.id === location.hash);
+      activate(fromHash>=0 ? fromHash : 0);
+    })();
+  </script>
 </head>
 <body>
   <main>
