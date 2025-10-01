@@ -1,1849 +1,298 @@
-F<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professional Cybersecurity Portfolio - Project Charter</title>
-  <style>
-/* --- Tabs --- */
-.tabs { margin-top: 6px; }
-.tablist {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  border-bottom: 1px solid var(--border);
-}
-.tablist [role="tab"] {
-  appearance: none; border: 1px solid var(--border);
-  background: var(--surface); color: var(--text);
-  padding: 8px 12px; border-top-left-radius: 10px; border-top-right-radius: 10px;
-  font-weight: 600; cursor: pointer;
-}
-.tablist [role="tab"][aria-selected="true"] {
-  background: linear-gradient(180deg, rgba(21,94,99,.12), transparent);
-  border-bottom-color: transparent; color: var(--brand-1);
-}
-.tabpanel {
-  border: 1px solid var(--border); border-top: none;
-  border-radius: 0 12px 12px 12px; padding: 14px;
-}
-.tabpanel[hidden] { display: none; }
-
-/* Make tab header sticky on long content */
-@media (min-width: 640px) {
-  .tablist.sticky { position: sticky; top: 0; background: var(--bg); padding-top: 8px; z-index: 5; }
-}
-    
-    /* WBS Table */
-.wbs-table{width:100%;border-collapse:collapse;margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:13px}
-.wbs-table th{background:linear-gradient(180deg,rgba(21,94,99,.95),rgba(21,94,99,.9));color:#fff;padding:10px;text-align:left}
-.wbs-table td{padding:10px;border-bottom:1px solid var(--border)}
-.wbs-table tbody tr:nth-child(odd){background:rgba(0,0,0,.02)}
-.wbs-table tbody tr:hover{background:rgba(26,188,156,.08)}
-.wbs-id{font-weight:600;color:var(--brand-1)}
-    /* =====================
-     Modern theme variables
-     ===================== */
-  :root {
-    --bg: #f6f7f9;
-    --surface: #ffffff;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --brand-1: #155e63;
-    --brand-2: #1abc9c;
-    --brand-3: #64d2c5;
-    --accent: #f59e0b;
-    --success: #10b981;
-    --danger: #ef4444;
-    --border: #e5e7eb;
-    --shadow: 0 10px 30px rgba(0,0,0,.08);
-    --radius-lg: 16px;
-    --radius-sm: 10px;
-  }
-
-  /* Dark mode */
-  .dark {
-    --bg: #0b1320;
-    --surface: #0f172a;
-    --text: #e5e7eb;
-    --muted: #94a3b8;
-    --brand-1: #22d3ee;
-    --brand-2: #10b981;
-    --brand-3: #34d399;
-    --accent: #f59e0b;
-    --success: #22c55e;
-    --danger: #ef4444;
-    --border: #1f2937;
-    --shadow: 0 10px 30px rgba(0,0,0,.45);
-  }
-
-  /* Base / typography */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  .container {
-    max-width: 1024px;
-    margin: 32px auto;
-    padding: 0 20px;
-  }
-
-  /* Header */
-  .header {
-    background: radial-gradient(1200px 500px at 10% -10%, var(--brand-3) 0%, transparent 60%),
-                linear-gradient(135deg, var(--brand-1), var(--brand-2));
-    color: #fff;
-    padding: 48px 28px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-  }
-  .header h1 {
-    margin: 0 0 8px;
-    font-size: clamp(28px, 3.6vw, 42px);
-    font-weight: 800;
-    letter-spacing: .2px;
-  }
-  .header p { margin: 0; opacity: .9; }
-  .header-actions {
-    position: absolute; top: 16px; right: 16px; display: flex; gap: 8px;
-  }
-  .btn {
-    background: rgba(255,255,255,.14);
-    color: #fff; border: 1px solid rgba(255,255,255,.25);
-    padding: 8px 12px; border-radius: 999px; cursor: pointer;
-    backdrop-filter: blur(6px);
-    transition: transform .15s ease, background .15s ease;
-  }
-  .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.24); }
-
-  /* Sections */
-  .section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
-    margin: 24px 0;
-    overflow: hidden;
-  }
-  .section-header {
-    padding: 18px 22px;
-    background: linear-gradient(180deg, rgba(0,0,0,.04), transparent);
-    border-bottom: 1px solid var(--border);
-  }
-  .section-title {
-    margin: 0;
-    font-size: 20px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-title::after {
-    content: "";
-    flex: 1; height: 1px; margin-left: 12px; background: var(--border);
-  }
-  .section-content { padding: 22px; }
-
-  /* Student info / chips */
-  .student-info {
-    background: linear-gradient(180deg, rgba(16,185,129,.08), transparent);
-    border-left: 4px solid var(--success);
-    border-radius: var(--radius-sm);
-    padding: 16px 18px;
-  }
-  .info-grid {
-    display: grid; gap: 12px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-  .info-item .info-label { font-weight: 600; color: var(--muted); font-size: 13px; }
-  .info-item .info-value {
-    margin-top: 6px; padding: 10px 12px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px;
-  }
-  .chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
-    color: var(--brand-1); background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.2);
-  }
-
-  /* Scope cards */
-  .scope-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
-  .scope-card {
-    background: linear-gradient(180deg, rgba(0,0,0,.03), transparent);
-    border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .scope-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-  .scope-card h4 { margin: 0 0 10px; font-size: 16px; }
-  .scope-card.in-scope { border-left: 4px solid var(--success); }
-  .scope-card.roadmap { border-left: 4px solid var(--brand-2); }
-  .scope-card.out-scope { border-left: 4px solid var(--danger); }
-  .placeholder { background: transparent; border: 0; padding: 0; color: var(--text); font-style: normal; }
-
-  /* Table */
-  .stakeholder-table {
-    width: 100%; border-collapse: collapse; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-  }
-  .stakeholder-table thead th {
-    position: sticky; top: 0;
-    background: linear-gradient(180deg, rgba(21,94,99,.95), rgba(21,94,99,.9));
-    color: #fff; padding: 12px; text-align: left; font-size: 13px;
-  }
-  .stakeholder-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; }
-  .stakeholder-table tbody tr:nth-child(odd) { background: rgba(0,0,0,.02); }
-  .stakeholder-table tbody tr:hover { background: rgba(26,188,156,.08); }
-
-  /* Grid image */
-  .power-interest-grid img {
-    width: 100%; height: auto;
-    border-radius: 12px; border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-  }
-  .power-interest-grid h4 { text-align: center; margin: 0 0 12px; color: var(--muted); }
-
-  /* Inline lists */
-  ul { padding-left: 1.2rem; }
-
-  /* Callouts */
-  .instructions {
-    background: linear-gradient(180deg, rgba(59,130,246,.12), transparent);
-    border: 1px dashed rgba(59,130,246,.35);
-    color: var(--text); border-radius: 12px; padding: 16px;
-  }
-  .completed-work {
-    background: linear-gradient(180deg, rgba(16,185,129,.1), transparent);
-    border: 1px solid rgba(16,185,129,.25);
-    border-radius: 12px; padding: 14px;
-  }
-
-  /* Print styles */
-  @media print {
-    .header-actions, #themeToggle { display: none !important; }
-    .header, .section { box-shadow: none !important; }
-    body { background: #fff; }
-  }
-
-.table-wrap { overflow-x: auto; border-radius: 12px; }
-@media print { .table-wrap { overflow: visible; } }
-.section { break-inside: avoid; page-break-inside: avoid; }
-.type-chip { box-shadow: 0 1px 0 rgba(0,0,0,.06); }
-    
-/* ===== Budget Table ===== */
-.budget-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  font-size: 13px;
-}
-.budget-table th, .budget-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-.budget-table thead th {
-  background: linear-gradient(180deg, rgba(21,94,99,.95), rgba(21,94,99,.9));
-  color: #fff;
-  font-weight: 700;
-}
-
-/* category bands */
-.bt-band { font-weight: 700; }
-.bt-labor     { background: #e8f7e9; border-top: 2px solid #59b36a; }
-.bt-software  { background: #e8f1fc; border-top: 2px solid #6aa3ff; }
-.bt-materials { background: #fff3e6; border-top: 2px solid #f2a94a; }
-.bt-services  { background: #f4e9fb; border-top: 2px solid #b286e0; }
-
-.bt-subtotal  { font-weight: 700; color: var(--muted); background: rgba(0,0,0,.02); }
-.bt-total     { font-weight: 800; background: #e8faf4; border-top: 2px solid var(--success); }
-
-.budget-table tbody tr:nth-child(odd) td { background: rgba(0,0,0,.015); }
-
-/* numeric alignment */
-.text-right { text-align: right; white-space: nowrap; }
-
-/* responsive */
-@media (max-width: 680px) {
-  .budget-table th:nth-child(2),
-  .budget-table td:nth-child(2) { white-space: nowrap; }
-}
-
-/* print */
-@media print {
-  .budget-table { box-shadow: none; }
-}
-</style>
-<script>
-(function () {
-  const container = document.getElementById('wbs-tabs');
-  if (!container) return;
-  const tabs = [...container.querySelectorAll('[role="tab"]')];
-  const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
-
-  function activate(idx, pushHash=false) {
-    tabs.forEach((t,i)=> {
-      const on = i===idx;
-      t.setAttribute('aria-selected', on);
-      panels[i].hidden = !on;
-    });
-    if (pushHash) history.replaceState(null,'','#'+panels[idx].id);
-    tabs[idx].focus();
-  }
-
-  tabs.forEach((tab,i)=>{
-    tab.addEventListener('click',()=>activate(i,true));
-    tab.addEventListener('keydown',e=>{
-      const k=e.key;
-      let j=i;
-      if (k==='ArrowRight') j=(i+1)%tabs.length;
-      else if (k==='ArrowLeft') j=(i-1+tabs.length)%tabs.length;
-      else if (k==='Home') j=0;
-      else if (k==='End') j=tabs.length-1;
-      else return;
-      e.preventDefault(); activate(j,true);
-    });
-  });
-
-  // Open the tab from URL hash (e.g., #panel-d4)
-  const fromHash = panels.findIndex(p => '#'+p.id === location.hash);
-  activate(fromHash>=0 ? fromHash : 0);
-})();
-</script><style id="custom-cursor" type="text/css">body button, body [type='button'], body input[type='reset'], body input[type='submit'], body [role="button"], ::-webkit-search-cancel-button, ::-webkit-search-decoration, ::-webkit-scrollbar-button, ::-webkit-file-upload-button, [role^=button], .cc_pointer, [type="search"]::-webkit-search-cancel-button, a, select, [type="search"]::-webkit-search-decoration, .paper-button, .ytp-progress-bar-container, input[type=submit], :link, :visited, a > *, img,  ::-webkit-scrollbar-button, .ogdlpmhglpejoiomcodnpjnfgcpmgale_pointer, ::-webkit-file-upload-button, .ytp-volume-panel, #myogdlpmhglpejoiomcodnpjnfgcpmgale .icon, body .custom-cursor-on-hover {cursor: url("data:image/png;base64,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") 6 1, pointer !important;} html,body,body select,body .custom-cursor-default-hover {cursor: url("data:image/png;base64,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") 2 3, auto !important;}</style><style>.rdp {
-  --rdp-cell-size: 40px;
-  --rdp-accent-color: #0000ff;
-  --rdp-background-color: #e7edff;
-  --rdp-accent-color-dark: #3003e1;
-  --rdp-background-color-dark: #180270;
-  --rdp-outline: 2px solid var(--rdp-accent-color); /* Outline border for focused elements */
-  --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75); /* Outline border for focused _and_ selected elements */
-
-  margin: 1em;
-}
-
-/* Hide elements for devices that are not screen readers */
-.rdp-vhidden {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: 0;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  position: absolute !important;
-  top: 0;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  clip: rect(1px, 1px, 1px, 1px) !important;
-  border: 0 !important;
-}
-
-/* Buttons */
-.rdp-button_reset {
-  appearance: none;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  cursor: default;
-  color: inherit;
-  outline: none;
-  background: none;
-  font: inherit;
-
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-
-.rdp-button {
-  border: 2px solid transparent;
-}
-
-.rdp-button[disabled] {
-  opacity: 0.25;
-}
-
-.rdp-button:not([disabled]) {
-  cursor: pointer;
-}
-
-.rdp-button:focus:not([disabled]),
-.rdp-button:active:not([disabled]) {
-  color: inherit;
-  border: var(--rdp-outline);
-  background-color: var(--rdp-background-color);
-}
-
-.rdp-button:hover:not([disabled]) {
-  background-color: var(--rdp-background-color);
-}
-
-.rdp-months {
-  display: flex;
-}
-
-.rdp-month {
-  margin: 0 1em;
-}
-
-.rdp-month:first-child {
-  margin-left: 0;
-}
-
-.rdp-month:last-child {
-  margin-right: 0;
-}
-
-.rdp-table {
-  margin: 0;
-  max-width: calc(var(--rdp-cell-size) * 7);
-  border-collapse: collapse;
-}
-
-.rdp-with_weeknumber .rdp-table {
-  max-width: calc(var(--rdp-cell-size) * 8);
-  border-collapse: collapse;
-}
-
-.rdp-caption {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  text-align: left;
-}
-
-.rdp-multiple_months .rdp-caption {
-  position: relative;
-  display: block;
-  text-align: center;
-}
-
-.rdp-caption_dropdowns {
-  position: relative;
-  display: inline-flex;
-}
-
-.rdp-caption_label {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  margin: 0;
-  padding: 0 0.25em;
-  white-space: nowrap;
-  color: currentColor;
-  border: 0;
-  border: 2px solid transparent;
-  font-family: inherit;
-  font-size: 140%;
-  font-weight: bold;
-}
-
-.rdp-nav {
-  white-space: nowrap;
-}
-
-.rdp-multiple_months .rdp-caption_start .rdp-nav {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.rdp-multiple_months .rdp-caption_end .rdp-nav {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
-
-.rdp-nav_button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--rdp-cell-size);
-  height: var(--rdp-cell-size);
-  padding: 0.25em;
-  border-radius: 100%;
-}
-
-/* ---------- */
-/* Dropdowns  */
-/* ---------- */
-
-.rdp-dropdown_year,
-.rdp-dropdown_month {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
-.rdp-dropdown {
-  appearance: none;
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  cursor: inherit;
-  opacity: 0;
-  border: none;
-  background-color: transparent;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.rdp-dropdown[disabled] {
-  opacity: unset;
-  color: unset;
-}
-
-.rdp-dropdown:focus:not([disabled]) + .rdp-caption_label,
-.rdp-dropdown:active:not([disabled]) + .rdp-caption_label {
-  border: var(--rdp-outline);
-  border-radius: 6px;
-  background-color: var(--rdp-background-color);
-}
-
-.rdp-dropdown_icon {
-  margin: 0 0 0 5px;
-}
-
-.rdp-head {
-  border: 0;
-}
-
-.rdp-head_row,
-.rdp-row {
-  height: 100%;
-}
-
-.rdp-head_cell {
-  vertical-align: middle;
-  text-transform: uppercase;
-  font-size: 0.75em;
-  font-weight: 700;
-  text-align: center;
-  height: 100%;
-  height: var(--rdp-cell-size);
-  padding: 0;
-}
-
-.rdp-tbody {
-  border: 0;
-}
-
-.rdp-tfoot {
-  margin: 0.5em;
-}
-
-.rdp-cell {
-  width: var(--rdp-cell-size);
-  height: 100%;
-  height: var(--rdp-cell-size);
-  padding: 0;
-  text-align: center;
-}
-
-.rdp-weeknumber {
-  font-size: 0.75em;
-}
-
-.rdp-weeknumber,
-.rdp-day {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: var(--rdp-cell-size);
-  max-width: var(--rdp-cell-size);
-  height: var(--rdp-cell-size);
-  margin: 0;
-  border: 2px solid transparent;
-  border-radius: 100%;
-}
-
-.rdp-day_today:not(.rdp-day_outside) {
-  font-weight: bold;
-}
-
-.rdp-day_selected:not([disabled]),
-.rdp-day_selected:focus:not([disabled]),
-.rdp-day_selected:active:not([disabled]),
-.rdp-day_selected:hover:not([disabled]) {
-  color: white;
-  background-color: var(--rdp-accent-color);
-}
-
-.rdp-day_selected:focus:not([disabled]) {
-  border: var(--rdp-outline-selected);
-}
-
-.rdp:not([dir='rtl']) .rdp-day_range_start:not(.rdp-day_range_end) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.rdp:not([dir='rtl']) .rdp-day_range_end:not(.rdp-day_range_start) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.rdp[dir='rtl'] .rdp-day_range_start:not(.rdp-day_range_end) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.rdp[dir='rtl'] .rdp-day_range_end:not(.rdp-day_range_start) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.rdp-day_range_end.rdp-day_range_start {
-  border-radius: 100%;
-}
-
-.rdp-day_range_middle {
-  border-radius: 0;
-}
-</style></head>
-
-
-
-
-
-
-  <body class="">
-<div class="container">
-<div class="header"><div class="header-actions"><button class="btn" id="themeToggle">🌙 Theme</button><button class="btn" onclick="window.print()">🖨️ Print</button></div>
-  
-  <h1>Professional Cybersecurity Portfolio</h1>
-  <p>Project Charter - Managing IT Projects Course</p>
-</div>
-<div class="content">
-<!-- Student Information -->
-<div class="student-info">
-<h3>Student Information</h3>
-<div class="info-grid">
-<div class="info-item">
-<div class="info-label">Student Name:</div>
-<div class="info-value">Elaine Li</div>
-</div>
-<div class="info-item">
-<div class="info-label">Course:</div>
-<div class="info-value">Managing IT Projects</div>
-</div>
-<div class="info-item">
-<div class="info-label">Semester:</div>
-<div class="info-value">Fall 2025</div>
-</div>
-</div>
-</div>
-<!-- Section 1: Project Title & Description -->
-<div class="section">
-<div class="section-header">
-<h2 class="section-title">📋 1. Project Goal &amp; Description</h2>
-</div>
-<div class="section-content">
-
-
-<p>Secure an entry‑level job in cybersecurity/IT by developing practical cybersecurity skills and workplace readiness through certifications, hands-on virtual labs, capstone project, and updating my resume/LinkedIn profile.</div>
-</div>
-<!-- Section 2: Vision, Mission & Strategy Alignment -->
-<div class="section">
-<div class="section-header">
-<h2 class="section-title">🎯 2. Vision, Mission &amp; Strategy Alignment</h2>
-</div>
-<div class="section-content">
-
-
-<h4>Personal Mission Connection:</h4><p>My mission is to help organizations strengthen their networks, systems, and data by identifying vulnerabilities, implementing security measures, and responding to incidents. My goal is to protect sensitive data from data breaches and cyber threats while also ensuring integrity.</p><h4>Vision Alignment:</h4><p>In the next 3-5 years, I envision myself working in the cybersecurity field with an organization that prioritizes data protection and risk management. Through continuous learning and hands-on experiences, I hope to have the opportunity to contribute to protecting personal and business information by developing incident response plans and implementing security measures for an organization.</p><h4>Strategic Goal Support:</h4><p>This project advances my strategic goals of developing advanced cybersecurity skills, hands-on experience, and building a professional portfolio. By completing certifications, labs, and projects, I am not just improving my technical skills but also achievements that strengthen my career readiness for the IT/cybersecurity field. This supports my vision of becoming a cybersecurity professional who safeguards sensitive information and maintaining the integrity of digital assets.</p></div>
-</div>
-<!-- Section 3: Business Case -->
-<div class="section">
-<div class="section-header">
-<h2 class="section-title">💼 3. Business Case &amp; Justification</h2>
-</div>
-<div class="section-content">
-
-
-<h4>Professional Value:</h4><p>This project will benefit my career by allowing me to gain certifications, hands-on experience, and build a professional portfolio that demonstrates my cybersecurity skills to employers. These will help strengthen my resume and increase my opportunity for entry-level IT and cybersecurity positions.
-    
-</p><h4>Personal Value:</h4>
-<p>This project will allow me to strengthen my problem-solving and critical thinking skills while applying my knowledge to real-world scenarios. Completing certifications, labs, and projects will give me a sense of accomplishment and confidence in my ability to contribute to cybersecurity solutions.
-    
-</p><h4>Learning Outcomes:</h4><p>
-   From this project, I will gain technical skills in identifying vulnerabilities, implementing security measures, and responding to incidents through my coursework. I will develop project management skills by setting timelines, breaking down sub-projects, and delivering goal-driven outcomes. I will deepen my knowledge of cybersecurity frameworks, tools, and best practices. These will help me be prepared for a cybersecurity career.
-</p></div>
-</div>
-<!-- Section 4: High-Level Scope -->
-<div class="section">
-<div class="section-header">
-<h2 class="section-title">📏 4. High-Level Scope</h2>
-</div>
-<div class="section-content">
-
-<div class="scope-grid">
-<div class="scope-card in-scope">
-<h4>✅ In Scope for Semester Project</h4>
-<div class="placeholder">
-
-<ul>
-<li>Complete at least one entry-level cybersecurity certification (e.g., Google Cybersecurity Professional Certificate, ISC2 CC, CompTIA Security+, etc.)</li>
-<li>Complete hands-on virtual labs related to cybersecurity/IT field demonstrating technical skills (e.g., TryHackMe, etc.)</li>
-<li>Complete selected LinkedIn Learning courses in cybersecurity/IT (e.g., Cybersecurity Foundations, Practical Cybersecurity for IT Professionals, Cybersecurity Foundations: Security Architecture, etc.)</li>
-<li>Complete Capstone Cybersecurity course project.</li>
-</ul>
-</div>
-</div>
-<div class="scope-card roadmap">
-<h4>🗺️ Roadmap Items (≤6 Months)</h4>
-<div class="placeholder">
-
-<ul>
-<li>Pursue additional cybersecurity certifications</li>
-<li>Build one additional visualization project in a different tool to expand skills.</li>
-<li>Expand my portfolio with certifications and achievements.</li>
-<li>Complete additional hands-on virtual labs/stimulations</li>
-<li>Update portfolio and add certifications on LinkedIn</li>
-</ul>
-</div>
-</div>
-<div class="scope-card out-scope">
-<h4>❌ Out of Scope</h4>
-<div class="placeholder">
-
-<ul>
-<li>Completion of international certifications requiring more than a year of preparation (e.g., CISSP, CISM)</li>
-<li>Development of a full-scale enterprise security tool or application (requires extensive resources)</li>
-<li>Creation of custom cybersecurity hardware (e.g., IoT penetration device)</li>
-<li>Graduate-level research publications related to cybersecurity</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Section 5: Stakeholder Register -->
-<div class="section">
-<div class="section-header">
-<h2 class="section-title">👥 5. Stakeholder Register</h2>
-</div>
-<div class="section-content">
-
-<div class="table-wrap"><div class="table-wrap"><table class="stakeholder-table">
-  <thead>
-    <tr>
-      <th>Stakeholder</th>
-      <th>Category</th>
-      <th>Role/Interest</th>
-      <th>Power</th>
-      <th>Interest</th>
-      <th>Quadrant</th>
-      <th>Engagement Strategy</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Profesors</td>
-      <td>Internal</td>
-      <td>Course evaluator, sets project expectations</td>
-      <td>High</td>
-      <td>High</td>
-      <td>Manage Closely</td>
-      <td>Provide regular updates on progress and deliverables; seek feedback to align with course expectations.</td>
-    </tr>
-    <tr>
-      <td>Class Peers</td>
-      <td>Internal</td>
-      <td>Provide peer feedback and collaboration in discussions</td>
-      <td>Low</td>
-      <td>Medium</td>
-      <td>Keep Informed</td>
-      <td>Share project progress in class discussions; seek peer feedback for improvements.</td>
-    </tr>
-    <tr>
-      <td>Academic Advisor</td>
-      <td>Internal</td>
-      <td>Provides guidance on aligning coursework with academic career</td>
-      <td>Medium</td>
-      <td>High</td>
-      <td>Keep Informed</td>
-      <td>Inform about progress on certifications, labs, and project; seek advice to align with long-term academic goals.</td>
-    </tr>
-    <tr>
-      <td>Future Employers</td>
-      <td>External</td>
-      <td>End-users as hiring criteria</td>
-      <td>High</td>
-      <td>High</td>
-      <td>Manage Closely</td>
-      <td>Build professional networks through communication and continuous updates tailored to employer expectations.</td>
-    </tr>
-    <tr>
-      <td>Google (Certification Provider)</td>
-      <td>External</td>
-      <td>Provides certification framework and exam</td>
-      <td>High</td>
-      <td>Low</td>
-      <td>Keep Satisfied</td>
-      <td>Meet certification requirements and complete exam; no ongoing engagement needed.</td>
-    </tr>
-    <tr>
-      <td>University Career Services</td>
-      <td>Internal</td>
-      <td>Supports career readiness and job placement</td>
-      <td>Medium</td>
-      <td>High</td>
-      <td>Manage Closely</td>
-      <td>Share certification and portfolio updates/progress for internship and job opportunities.</td>
-    </tr>
-    <tr>
-      <td>Personal Support System</td>
-      <td>External</td>
-      <td>Provides moral support</td>
-      <td>Low</td>
-      <td>Medium</td>
-      <td>Monitor</td>
-      <td>Provide minimal information about any updates.</td>
-    </tr>
-    <tr>
-      <td>LinkedIn</td>
-      <td>External</td>
-      <td>Networking platform for showcasing certifications, progress, and achievements</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Keep Informed</td>
-      <td>Share portfolio and certifications for networking.</td>
-    </tr>
-   
-  
-  </tbody>
-</table></div>
-<div class="power-interest-grid">
-  <h4>Power-Interest Grid Visualization</h4>
-  <img src="Screenshot_2025-09-26_at_7.56.01_PM.png"
-       alt="Power–Interest Grid Visualization"
-       width="600"
-       loading="lazy">
-
-</div>
-
-
-</p></div>
-</div>
-</div>
-
-  
-    <!-- Section 6: Deliverables & Definition of Done -->
-
-<div class="section">
-  <div class="section-header">
-    <h2 class="section-title">📦 6. Deliverables</h2>
-  </div>
-<style>.type-chip {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: white;
-}
-.type-tangible { background: #28a745; }   /* green */
-.type-intangible { background: #dc3545; } /* red */
-.type-outcome { background: #007bff; }    /* blue */</style>
-  <div class="section-content">
-    <table class="stakeholder-table">
-      <thead>
-        <tr>
-          <th>Deliverable</th>
-          <th>Type</th>
-          <th>SMART Description</th>
-          <th>Definition of Done</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Google Cybersecurity Professional Certificate</td>
-          <td><span class="type-chip type-tangible">Tangible</span></td>
-          <td>Earn an entry-level certification by the end of the semester</td>
-          <td>Certification of completion or proof of certification completion received.</td>
-        </tr>
-        
-        <tr>
-          <td>Hands-On Virtual Lab</td>
-          <td><span class="type-chip type-tangible">Tangible</span></td>
-          <td>Complete a guided hands-on virtual lab by the end of the semester.</td>
-          <td>Lab completed with results/proof documented</td>
-        </tr>
-        <tr>
-          <td>LinkedIn Learning Courses</td>
-          <td><span class="type-chip type-tangible">Tangible</span></td>
-          <td>Complete LinkedIn Learning courses related to cybersecurity by the end of the semester.</td>
-          <td>Courses completed with certificates of completion that can be added to LinkedIn and my portfolio</td>
-        </tr>
-        <tr>
-          <td>Capstone Cybersecurity Course Project</td>
-          <td><span class="type-chip type-tangible">Tangible</span></td>
-          <td>Complete a cybersecurity related course project by the end of the semester.</td>
-          <td>Project is completed, documented, and showcased in your portfolio</td>
-        </tr>
-      </tbody>
-    </table></div>
-
-  
-  </div>
-    <div class="section" id="wbs">
-  <div class="section-header">
-    <h2 class="section-title">🧩Work Breakdown Structure (WBS)</h2>
-  </div>
-  <div class="section-content tabs" data-tabs="" id="wbs-tabs">
-    
-    <div class="tablist sticky" role="tablist" aria-label="WBS Deliverables">
-      <button role="tab" id="tab-d1" aria-controls="panel-d1" aria-selected="true">Deliverable 1</button>
-      
-      <button role="tab" id="tab-d2" aria-controls="panel-d2" aria-selected="false">Deliverable 2</button>
-      <button role="tab" id="tab-d3" aria-controls="panel-d3" aria-selected="false">Deliverable 3</button>
-      <button role="tab" id="tab-d4" aria-controls="panel-d4" aria-selected="false">Deliverable 4</button>
-    </div>
-
-    
-    <div id="panel-d1" class="tabpanel" role="tabpanel" aria-labelledby="tab-d1">
-      <h3 style="margin-top:0">Google Cybersecurity Professional Certificate</h3>
-      <div class="table-wrap">
-        <table class="wbs-table">
-          <thead>
-            <tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr>
-          </thead>
-          <tbody>
-<tr>
-<td class="wbs-id">1.0</td>
-<td>Deliverable</td>
-<td>Cybersecurity Certificate</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1</td>
-<td>Work Package</td>
-<td>Planning and Preparation</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.1</td>
-<td>Task</td>
-<td>Research type of certification</td>
-<td>2.0</td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.2</td>
-<td>Task</td>
-<td>Selecting target certification based on cybersecurity</td>
-<td>3.0</td>
-<td>1.1.1 - Research certification options</td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.3</td>
-<td>Task</td>
-<td>Registering an account for certification exam and secure study resources/materials</td>
-<td>1.0</td>
-<td>1.1.2 - Select target certification</td>
-</tr>
-<tr>
-<td class="wbs-id">1.2</td>
-<td>Work Package</td>
-<td>Study and Training</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.2.1</td>
-<td>Task</td>
-<td>Develop study plan with weekly milestones</td>
-<td>3.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.2.2</td>
-<td>Task</td>
-<td>Complete training modules provided</td>
-<td>3.0</td>
-<td>|| 1.2.1 - Develop study plan</td>
-</tr>
-<tr>
-<td class="wbs-id">1.2.3</td>
-<td>Task</td>
-<td>Take detailed notes and create study guides</td>
-<td>2.0</td>
-<td>|| 1.2.2 - Complete training modules</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3</td>
-<td>Work Package</td>
-<td>Practice and Assessment</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.1</td>
-<td>Task</td>
-<td>Complete practice quizzes for each module</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.2</td>
-<td>Task</td>
-<td>Review results and retake weak areas</td>
-<td>5.0</td>
-<td>1.3.1 - Attempt practice quizzes</td>
-</tr>
-
-<tr>
-<td class="wbs-id">1.4</td>
-<td>Work Package</td>
-<td>Exam completion</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.1</td>
-<td>Task</td>
-<td>Final review of key concepts before exam</td>
-<td>2.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.2</td>
-<td>Task</td>
-<td>Take certification exam and pass</td>
-<td>1.0</td>
-<td>1.4.1 - Final review</td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.3</td>
-<td>Task</td>
-<td>Obtain certification proof and upload to portfolio and resume</td>
-<td>1.0</td>
-<td>1.4.2 - Passed exam</td>
-</tr>
-
-</tr>
-</tbody>
-        </table>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-actions">
+        <button class="btn" id="themeToggle">🌙 Theme</button>
+        <button class="btn" onclick="window.print()">🖨️ Print</button>
       </div>
+      <h1>Professional Cybersecurity Portfolio</h1>
+      <p>Project Charter - Managing IT Projects Course</p>
     </div>
-    
-    <div id="panel-d2" class="tabpanel" role="tabpanel" aria-labelledby="tab-d2" hidden="">
-      <h3 style="margin-top:0">Deliverable 2 – Capstone Course Project</h3>
-      <div class="table-wrap">
-        <table class="wbs-table">
-          <thead>
-            <tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr>
-          </thead>
-          <tbody>
-<tr>
-<td class="wbs-id">1.0</td>
-<td>Deliverable</td>
-<td>Capstone Course Project</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1</td>
-<td>Work Package</td>
-<td>Project Planning</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.1</td>
-<td>Task</td>
-<td>Select cybersecurity project topic</td>
-<td>3.0</td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.2</td>
-<td>Task</td>
-<td>Define project objectives, scope, and requirements</td>
-<td>3.0</td>
-<td>1.1.1 - Select project topic</td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.3</td>
-<td>Task</td>
-<td>Develop project timeline and milestones</td>
-<td>3.0</td>
-<td>1.1.2 - Define project objectives and research questions</td>
-</tr>
-<tr>
-<td class="wbs-id">1.2</td>
-<td>Work Package</td>
-<td>Research and Preparation</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.2.1</td>
-<td>Task</td>
-<td>Conduct research on risk assessment</td>
-<td>5.0</td>
 
-</tr>
-<tr>
-<td class="wbs-id">1.2.2</td>
-<td>Task</td>
-<td>Define hazard, attack tools, security breach, malicious attack, and malicious software</td>
-<td>5.0</td>
-<td>1.2.1 - Research on risk assessment</td>
-</tr>
-<tr>
-<td class="wbs-id">1.2.3</td>
-<td>Task</td>
-<td>Document a mitigation plan</td>
-<td>5.0</td>
-<td>1.2.2 - Identify vulnerabilities, threats, and risks</td>
-</tr>
-
-<tr>
-<td class="wbs-id">1.3</td>
-<td>Work Package</td>
-<td>Project Execution</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.1</td>
-<td>Task</td>
-<td>Identify critical business functions</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.2</td>
-<td>Task</td>
-<td>Develop recovery goals and requirements</td>
-<td>4.0</td>
-<td>1.3.1 - Research critical business functions</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.3</td>
-<td>Task</td>
-<td>Document recovery point objectives and requirements</td>
-<td>3.0</td>
-<td>1.3.2 - Identify recovery goals and requirements</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.4</td>
-<td>Task</td>
-<td>Review progress and adjust project if necessary</td>
-<td>2.0</td>
-<td>1.3.3 - Document findings</td>
-
-</tr>
-<tr>
-<td class="wbs-id">1.3.1</td>
-<td>Task</td>
-<td>Complete practice quizzes for each module</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.2</td>
-<td>Task</td>
-<td>Review results and retake weak areas</td>
-<td>5.0</td>
-<td>1.3.1 - Attempt practice quizzes</td>
-</tr>
-
-<tr>
-<td class="wbs-id">1.4</td>
-<td>Work Package</td>
-<td>Progress Report</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.1</td>
-<td>Task</td>
-<td>Draft project information </td>
-<td>5.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.2</td>
-<td>Task</td>
-<td>Create resumption strategies</td>
-<td>3.0</td>
-<td>1.4.1 - Draft report</td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.3</td>
-<td>Task</td>
-<td>Complete business function resumption table</td>
-<td>2.0</td>
-<td>1.4.2 - Create strategies</td>
-
-</tr>
-<tr>
-<td class="wbs-id">1.4.4</td>
-<td>Task</td>
-<td>Create employee contact list</td>
-<td>1.0</td>
-<td>1.4.3 - Finalize resumption table</td>
-
-</tr>
-<tr>
-<td class="wbs-id">1.4.5</td>
-<td>Task</td>
-<td>Create vendor contact list</td>
-<td>1.0</td>
-<td>1.4.4 - Finalize employee contact list</td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.6</td>
-<td>Task</td>
-<td>Create family emergency plan</td>
-<td>1.0</td>
-<td>1.4.5 - Finalize vendor contact list</td>
-
-</tr>
-<tr>
-<td class="wbs-id">1.4.6</td>
-<td>Task</td>
-<td>Research and list available insurance coverages</td>
-<td>2.0</td>
-<td>1.4.5 - Finalize family emergency plan</td>
-
-</tr>
-<tr>
-<td class="wbs-id">1.4.7</td>
-<td>Task</td>
-<td>Research cybersecurity tools </td>
-<td>2.0</td>
-<td>1.4.6 - Document insurance considerations</td>
-
-</tr>
-<tr>
-<td class="wbs-id">1.4.8</td>
-<td>Task</td>
-<td>Create storyboard</td>
-<td>2.0</td>
-<td>1.4.7 - Select and analyze tool</td>
-
-
-</tr>
-<tr>
-<td class="wbs-id">1.5</td> 
-<td>Work Package</td>
-<td>Project Submission</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.5.1</td>
-<td>Task</td>
-<td>Finalize project </td>
-<td>1.0</td>
-</tr>
-<tr>
-<td class="wbs-id">1.5.2</td>
-<td>Task</td>
-<td>Review overall project</td>
-<td>2.0</td>
-<td>1.5.1 - Finalize project</td>
-</tr>
-<tr>
-<td class="wbs-id">1.5.3</td>
-<td>Task</td>
-<td>Submit final report</td>
-<td>1.0</td>
-<td>1.5.2 - Review project</td>
-
-
-  
-</tr>
-</tbody>
-        </table>
+    <div class="content">
+      <!-- Student Info -->
+      <div class="section">
+        <button class="collapse-btn">👩‍🎓 Student Information</button>
+        <div class="section-content">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">Student Name:</div><div class="info-value">Elaine Li</div></div>
+            <div class="info-item"><div class="info-label">Course:</div><div class="info-value">Managing IT Projects</div></div>
+            <div class="info-item"><div class="info-label">Semester:</div><div class="info-value">Fall 2025</div></div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div id="panel-d3" class="tabpanel" role="tabpanel" aria-labelledby="tab-d3" hidden="">
-      <h3 style="margin-top:0">Deliverable 3 – Hands-On Virtual Lab</h3>
-      <div class="table-wrap">
-        <table class="wbs-table">
-          <thead>
-            <tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr>
-          </thead>
-          <tbody>
-<tr>
-<td class="wbs-id">1.0</td>
-<td>Deliverable</td>
-<td>Hands-On Virtual Lab</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1</td>
-<td>Work Package</td>
-<td>Lab Preparation</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.1</td>
-<td>Task</td>
-<td>Review lab requirements and objectives</td>
-<td>1.0</td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.2</td>
-<td>Task</td>
-<td>Set up lab environment</td>
-<td>2.0</td>
-<td>1.1.1 - Review requirements</td>
-</tr>
-<tr>
-<td class="wbs-id">1.1.3</td>
-<td>Task</td>
-<td>Verify access to tools/resources</td>
-<td>2.0</td>
-<td>1.1.2 - Set up lab environment</td>
-</tr>
-<tr>
-<td class="wbs-id">1.2</td>
-<td>Work Package</td>
-<td>Lab Execution</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.2.1</td>
-<td>Task</td>
-<td>Complete initial configuration tasks</td>
-<td>2.0</td>
 
-</tr>
-<tr>
-<td class="wbs-id">1.2.2</td>
-<td>Task</td>
-<td>Follow guided instructions to stimulate attack or defense scenario</td>
-<td>3.0</td>
-<td>1.2.1 - Complete configuration</td>
+      <!-- Section 1 -->
+      <div class="section">
+        <button class="collapse-btn">📋 1. Project Goal & Description</button>
+        <div class="section-content">
+          <p>Secure an entry-level job in cybersecurity/IT by developing practical cybersecurity skills and workplace readiness through certifications, hands-on virtual labs, capstone project, and updating my resume/LinkedIn profile.</p>
+        </div>
+      </div>
 
-</tr>
-<tr>
-<td class="wbs-id">1.2.3</td>
-<td>Task</td>
-<td>Capture evidence/screenshot of lab progress</td>
-<td>3.0</td>
-<td>|| 1.2.2 - Stimulate scenario </td>
+      <!-- Section 2 -->
+      <div class="section">
+        <button class="collapse-btn">🎯 2. Vision, Mission & Strategy Alignment</button>
+        <div class="section-content">
+          <h4>Personal Mission Connection:</h4>
+          <p>My mission is to help organizations strengthen their networks, systems, and data...</p>
+          <h4>Vision Alignment:</h4>
+          <p>In the next 3–5 years, I envision myself working in the cybersecurity field...</p>
+          <h4>Strategic Goal Support:</h4>
+          <p>This project advances my strategic goals of developing advanced cybersecurity skills...</p>
+        </div>
+      </div>
 
-</tr>
-<tr>
-<td class="wbs-id">1.2.4</td>
-<td>Task</td>
-<td>Troubleshoot and repeat steps if error occurs</td>
-<td>3.0</td>
-<td>1.2.3 - Obtain evidence</td>
+      <!-- Section 3 -->
+      <div class="section">
+        <button class="collapse-btn">💼 3. Business Case & Justification</button>
+        <div class="section-content">
+          <h4>Professional Value:</h4>
+          <p>This project will benefit my career by allowing me to gain certifications...</p>
+          <h4>Personal Value:</h4>
+          <p>This project will allow me to strengthen my problem-solving and critical thinking...</p>
+          <h4>Learning Outcomes:</h4>
+          <p>From this project, I will gain technical skills in identifying vulnerabilities...</p>
+        </div>
+      </div>
 
-  
-</tr>
-<tr>
-<td class="wbs-id">1.3</td>
-<td>Work Package</td>
-<td>Documentation</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.1</td>
-<td>Task</td>
-<td>Write a summary of lab progress</td>
-<td>2.0</td>
+      <!-- Section 4 -->
+      <div class="section">
+        <button class="collapse-btn">📏 4. High-Level Scope</button>
+        <div class="section-content">
+          <div class="scope-grid">
+            <div class="scope-card in-scope">
+              <h4>✅ In Scope</h4>
+              <ul>
+                <li>Complete one entry-level certification</li>
+                <li>Hands-on virtual labs</li>
+                <li>LinkedIn Learning courses</li>
+                <li>Capstone course project</li>
+              </ul>
+            </div>
+            <div class="scope-card roadmap">
+              <h4>🗺️ Roadmap (≤6 Months)</h4>
+              <ul>
+                <li>Pursue additional certifications</li>
+                <li>Expand portfolio with new projects</li>
+              </ul>
+            </div>
+            <div class="scope-card out-scope">
+              <h4>❌ Out of Scope</h4>
+              <ul>
+                <li>CISSP, CISM (long-term certs)</li>
+                <li>Full enterprise security tools</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-</tr>
-<tr>
-<td class="wbs-id">1.3.2</td>
-<td>Task</td>
-<td>Document key findings</td>
-<td>1.0</td>
-<td>1.3.1 - Write lab summary</td>
-</tr>
-<tr>
-<td class="wbs-id">1.3.3</td>
-<td>Task</td>
-<td>Review lab report</td>
-<td>2.0</td>
-<td>1.3.2 - Document findings</td>
-</tr>
-<tr>
-<td class="wbs-id">1.4</td>
-<td>Work Package</td>
-<td>Lab Submission</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td class="wbs-id">1.4.1</td>
-<td>Task</td>
-<td>Proofread and finalize lab report</td>
-<td>2.0</td>
+      <!-- Section 5 -->
+      <div class="section">
+        <button class="collapse-btn">👥 5. Stakeholder Register</button>
+        <div class="section-content">
+          <table>
+            <thead><tr><th>Stakeholder</th><th>Category</th><th>Role/Interest</th><th>Power</th><th>Interest</th></tr></thead>
+            <tbody>
+              <tr><td>Professors</td><td>Internal</td><td>Evaluator</td><td>High</td><td>High</td></tr>
+              <tr><td>Class Peers</td><td>Internal</td><td>Feedback</td><td>Low</td><td>Medium</td></tr>
+              <tr><td>Future Employers</td><td>External</td><td>Hiring decision makers</td><td>High</td><td>High</td></tr>
+            </tbody>
+          </table>
+          <img src="Screenshot_2025-09-26_at_7.56.01_PM.png" alt="Power–Interest Grid" width="600">
+        </div>
+      </div>
 
-</tr>
-<tr>
-<td class="wbs-id">1.4.2</td>
-<td>Task</td>
-<td>Submit completed lab report</td>
-<td>1.0</td>
-<td>1.4.1 - Finalize lab report</td>
-</tr>
+      <!-- Section 6 -->
+      <div class="section">
+        <button class="collapse-btn">📦 6. Deliverables</button>
+        <div class="section-content">
+          <table>
+            <thead><tr><th>Deliverable</th><th>Type</th><th>SMART Description</th><th>Definition of Done</th></tr></thead>
+            <tbody>
+              <tr><td>Google Cybersecurity Certificate</td><td>Tangible</td><td>Earn cert by semester end</td><td>Proof of completion</td></tr>
+              <tr><td>Hands-On Lab</td><td>Tangible</td><td>Complete and document lab</td><td>Lab results documented</td></tr>
+              <tr><td>Capstone Project</td><td>Tangible</td><td>Submit final project</td><td>Project completed & showcased</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-</tbody>
-        </table>
+      <!-- Section WBS -->
+      <div class="section">
+        <button class="collapse-btn">🧩 Work Breakdown Structure (WBS)</button>
+        <div class="section-content">
+          <!-- Full WBS with tabs -->
+          <div id="wbs-tabs" class="tabs">
+            <div class="tablist" role="tablist" aria-label="WBS Deliverables">
+              <button role="tab" id="tab-d1" aria-controls="panel-d1" aria-selected="true">Deliverable 1</button>
+              <button role="tab" id="tab-d2" aria-controls="panel-d2" aria-selected="false">Deliverable 2</button>
+              <button role="tab" id="tab-d3" aria-controls="panel-d3" aria-selected="false">Deliverable 3</button>
+              <button role="tab" id="tab-d4" aria-controls="panel-d4" aria-selected="false">Deliverable 4</button>
+            </div>
+            <!-- Panels -->
+            <div id="panel-d1" class="tabpanel" role="tabpanel">[Google Cybersecurity Certificate WBS table here]</div>
+            <div id="panel-d2" class="tabpanel" role="tabpanel" hidden>[Capstone Project WBS table here]</div>
+            <div id="panel-d3" class="tabpanel" role="tabpanel" hidden>[Hands-On Lab WBS table here]</div>
+            <div id="panel-d4" class="tabpanel" role="tabpanel" hidden>[Other deliverable WBS table here]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Budget -->
+      <div class="section">
+        <button class="collapse-btn">💵 Budget & Cost Estimate</button>
+        <div class="section-content">
+          <!-- Full Budget Table -->
+          <div class="table-wrap">
+            <table class="budget-table" id="budgetTable">
+              <thead>
+                <tr><th>Cost Item</th><th>Quantity/Hours</th><th>Rate/Price</th><th class="text-right">Total Cost</th></tr>
+              </thead>
+              <tbody>
+                <tr class="bt-band bt-labor"><td colspan="4">👨‍💻 LABOR COSTS</td></tr>
+                <tr data-type="labor">
+                  <td>Cyber Security Analyst / Student Researcher</td>
+                  <td contenteditable="true">160</td>
+                  <td contenteditable="true">$35/hr</td>
+                  <td class="text-right" data-line>$5,600</td>
+                </tr>
+                <tr data-type="labor">
+                  <td>Designer</td>
+                  <td contenteditable="true">12</td>
+                  <td contenteditable="true">$8/hr</td>
+                  <td class="text-right" data-line>$96</td>
+                </tr>
+                <tr class="bt-subtotal"><td colspan="3"><strong>LABOR SUBTOTAL</strong></td><td class="text-right">$5,696</td></tr>
+                <tr class="bt-total"><td colspan="3"><strong>💰 TOTAL PROJECT BUDGET</strong></td><td class="text-right" id="grandTotal">$5,696</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Methodology -->
+      <div class="section">
+        <button class="collapse-btn">🧭 Project Methodology</button>
+        <div class="section-content">
+          <p><strong>Requirements:</strong> Deliverables well-defined...</p>
+          <img src="Project_Method1.png" alt="Methodology Diagram" width="600">
+        </div>
+      </div>
+
+      <!-- Section Release Schedule -->
+      <div class="section">
+        <button class="collapse-btn">📊 Release Schedule</button>
+        <div class="section-content">
+          <!-- Keep your original release schedule visualization -->
+        </div>
+      </div>
+
+      <!-- Section Tools -->
+      <div class="section">
+        <button class="collapse-btn">🛠 Tool Selection & Setup</button>
+        <div class="section-content">
+          <p>Final choice: Monday.com (supports hybrid methodology)</p>
+        </div>
+      </div>
+
+      <!-- Section Screenshots -->
+      <div class="section">
+        <button class="collapse-btn">📷 Project Tool Screenshots</button>
+        <div class="section-content">
+          <img src="Google_Cert2.png" alt="Google Cybersecurity Certificate" width="600">
+          <img src="Google_PRO_Cert.png" alt="Google Cybersecurity PRO Certificate" width="600">
+          <img src="Course_Pro_3.png" alt="Course Project" width="600">
+        </div>
+      </div>
+
+      <!-- Footer Notes -->
+      <div class="section">
+        <button class="collapse-btn">📝 Additional Charter Components</button>
+        <div class="section-content">
+          <p>Future updates: Risk Register, Acceptance Criteria, Execution Plan...</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Budget & Cost Estimate --><div class="section" id="budget">
-  <div class="section-header">
-    <h2 class="section-title">💵 Budget &amp; Cost Estimate</h2>
-  </div>
-  <div class="section-content">
-
-    <div class="table-wrap">
-      <table class="budget-table" id="budgetTable">
-        <thead>
-          <tr>
-            <th>Cost Item</th>
-            <th>Quantity/Hours</th>
-            <th>Rate/Price</th>
-            <th class="text-right">Total Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <!-- LABOR -->
-          <tr class="bt-band bt-labor"><td colspan="4">👨‍💻 LABOR COSTS</td></tr>
-          <tr data-type="labor">
-            <td>Cyber Security Analyst / Student Researcher</td>
-            <td contenteditable="true" data-qty="">160</td>
-            <td contenteditable="true" data-rate="">$35/hr</td>
-            <td class="text-right" data-line="">$5,600</td>
-          </tr>
-          <tr data-type="labor">
-            <td>Designer</td>
-            <td contenteditable="true" data-qty="">12</td>
-            <td contenteditable="true" data-rate="">$8/hr</td>
-            <td class="text-right" data-line="">$1,020</td>
-          </tr>
-          <tr data-type="labor">
-            <td>Project Manager</td>
-            <td contenteditable="true" data-qty="">20</td>
-            <td contenteditable="true" data-rate="">$60/hr</td>
-            <td class="text-right" data-line="">$1,200</td>
-          </tr>
-          <tr class="bt-subtotal">
-            <td colspan="3"><strong>LABOR SUBTOTAL</strong></td>
-            <td class="text-right" id="laborSubtotal">$7,820</td>
-          </tr>
-
-          <!-- EQUIPMENT/SOFTWARE -->
-          <tr class="bt-band bt-software"><td colspan="4">💻 EQUIPMENT / SOFTWARE COSTS</td></tr>
-          <tr data-type="fixed">
-            <td>Software License (TryHackMe annual)</td>
-            <td contenteditable="true" data-qty="">1</td>
-            <td contenteditable="true" data-rate="">~$80/yr to ~$100/yr</td>
-            <td class="text-right" data-line="">$80</td>
-          </tr>
-          <tr data-type="fixed">
-            <td>Cybersecurity Training Content & Certification</td>
-            <td contenteditable="true" data-qty="">1</td>
-            <td contenteditable="true" data-rate="">$0</td>
-            <td class="text-right" data-line="">$0</td>
-          </tr>
-          <tr class="bt-subtotal">
-            <td colspan="3"><strong>EQUIPMENT/SOFTWARE SUBTOTAL</strong></td>
-            <td class="text-right" id="softSubtotal">$80</td>
-          </tr>
-
-          <!-- MATERIALS -->
-          <tr class="bt-band bt-materials"><td colspan="4">📦 MATERIALS COSTS</td></tr>
-          <tr data-type="fixed">
-            <td>Training materials &amp; documentation assets</td>
-            <td contenteditable="true" data-qty="">1</td>
-            <td contenteditable="true" data-rate="">$0</td>
-            <td class="text-right" data-line="">$0</td>
-          </tr>
-          <tr class="bt-subtotal">
-            <td colspan="3"><strong>MATERIALS SUBTOTAL</strong></td>
-            <td class="text-right" id="matSubtotal">$0</td>
-          </tr>
-
-          <!-- SERVICES -->
-          <tr class="bt-band bt-services"><td colspan="4">🛠 SERVICES COSTS</td></tr>
-          <tr data-type="fixed">
-            <td>Network Services & Misconfigurations/Third-Party APIs</td>
-            <td contenteditable="true" data-qty="">1</td>
-            <td contenteditable="true" data-rate="">$0</td>
-            <td class="text-right" data-line="">$0</td>
-          </tr>
-          <tr data-type="fixed">
-            <td>Backup Storage (CLoud)</td>
-            <td contenteditable="true" data-qty="">6 months</td>
-            <td contenteditable="true" data-rate="">$2/month</td>
-            <td class="text-right" data-line="">$12</td>
-          </tr>
-          <tr class="bt-subtotal">
-            <td colspan="3"><strong>SERVICES SUBTOTAL</strong></td>
-            <td class="text-right" id="svcSubtotal">$12</td>
-          </tr>
-
-          <!-- TOTALS -->
-          <tr class="bt-subtotal">
-            <td colspan="3"><strong>SUBTOTAL DIRECT COSTS</strong></td>
-            <td class="text-right" id="directSubtotal">$7,912</td>
-          </tr>
-          <tr class="bt-subtotal">
-            <td>Contingency Reserve</td>
-            <td contenteditable="true" id="contPct">20%</td>
-            <td class="muted">Applied to direct subtotal</td>
-            <td class="text-right" id="contValue">$1,582.4</td>
-          </tr>
-          <tr class="bt-total">
-            <td colspan="3"><strong>💰 TOTAL PROJECT BUDGET</strong></td>
-            <td class="text-right" id="grandTotal">$9,494.4</td>
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
-
-    
-
-  </div>
-</div>
-<!-- Section: Project Methodology -->
-<div class="section" id="methodology">
-  <div class="section-header">
-    <h2 class="section-title">🧭 Project Methodology (Hybrid: Incremental)</h2>
-  </div>
-  <div class="section-content">
-    <p><strong>Requirements:</strong> Deliverables are well-defined (certificate, course project, hands-on lab)</p>
-    <p><strong>Delivery Cadence:</strong> To reduce any risk, the project is divided into three major releases instead of one final delivery.</p>
-    <ul>
-      <li><strong>Release 1 (Week 1-14):</strong> Submitted and Presented Course Project</li>
-      <li><strong>Release 2 (Week 5-8):</strong> Completed Certification</li>
-      <li><strong>Release 3 (Week 10-13):</strong> Completed Hands-On Lab</li>
-  
-    <p><strong>Why Hybrid?</strong> This approach allows me to adjust/adapt along the way which is ideal for a semester project with fixed requirements.</p>
-
-    <img src="Project_Method1.png"
-     alt="Project Methodology Diagram"
-     width="600"
-     loading="lazy">
-    
-  </div>
-</div>
-
-
-<!-- Section: Release Schedule Diagram -->
-<div class="section" id="release-schedule">
-  <div class="section-header">
-    <h2 class="section-title">📊 Hybrid: Incremental Release Schedule</h2>
-  </div>
-  <div class="section-content">
-    <div class="schedule" style="display:flex;justify-content:center;align-items:flex-start;gap:40px;flex-wrap:wrap;">
-      <div class="release" style="background:#add8e6;padding:20px 30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);position:relative;min-width:200px;text-align:left;">
-
-<!-- Section: feedback -->
-        <div class="feedback" style="position:absolute;top:-15px;right:-15px;background:#ff6b6b;color:#fff;font-size:12px;font-weight:bold;padding:5px 10px;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,0.2);">Feedback</div>
-
-        <h3 style="margin:0;color:#003366;text-align:center;">Release 1</h3>
-        <p style="margin:5px 0 10px;font-size:14px;color:#333;text-align:center;">Weeks 5–8</p>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
-          <li>Plan Cybersecurity Certificate</li>
-          <li>Train & Practice Materials</li>
-          <li>Complete Exam </li>
-        </ul>
-      </div>
-      <div class="arrow" style="font-size:24px;color:#666;margin-top:50px;">→</div>
-      <div class="release" style="background:#add8e6;padding:20px 30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);position:relative;min-width:200px;text-align:left;">
-        <div class="feedback" style="position:absolute;top:-15px;right:-15px;background:#ff6b6b;color:#fff;font-size:12px;font-weight:bold;padding:5px 10px;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,0.2);">Feedback</div>
-        <h3 style="margin:0;color:#003366;text-align:center;">Release 2</h3>
-        <p style="margin:5px 0 10px;font-size:14px;color:#333;text-align:center;">Weeks 1-14</p>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
-          <li>Plan & Research Course Project</li>
-          <li>Execute Project</li>
-          <li>Progress Report & Submit Project</li>
-        </ul>
-      </div>
-      <div class="arrow" style="font-size:24px;color:#666;margin-top:50px;">→</div>
-      <div class="release" style="background:#add8e6;padding:20px 30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);position:relative;min-width:200px;text-align:left;">
-        <div class="feedback" style="position:absolute;top:-15px;right:-15px;background:#ff6b6b;color:#fff;font-size:12px;font-weight:bold;padding:5px 10px;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,0.2);">Feedback</div>
-        <h3 style="margin:0;color:#003366;text-align:center;">Release 3</h3>
-        <p style="margin:5px 0 10px;font-size:14px;color:#333;text-align:center;">Weeks 10–13</p>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
-          <li>Prepare Lab Materials/Software</li>
-          <li>Execute & Perform Lab Stimulation</li>
-          <li>Document & Submit Lab Report</li>
-        </ul>
-      </div>
-    </div>
-    <div class="legend" style="margin-top:30px;font-size:14px;color:#333;text-align:center;">
-      
-    </div>
-  </div>
-</div>
-
-
-<!-- Section: Tool Selection & Setup -->
-<div class="section" id="tool-selection">
-  <div class="section-header">
-    <h2 class="section-title">🛠 Tool Selection &amp; Setup</h2>
-  </div>
-  <div class="section-content">
-    <h4>Tools Explored</h4>
-    <ul>
-      <li><strong>Trello</strong> → Simple with Kanban boards; flexible for adaptive/hydrid methodology but lacks advanced dependencies</li>
-      <li><strong>Monday.com</strong> → Friendly user interface with customizable features, flexiblity, and sprint planning</li>
-      <li><strong>Jira</strong> → Agile-oriented with Scrum/Kanban boards, backlog management, and sprint planning; supports a hybrid methodology</li>
-    </ul>
-
-    <h4>Final Choice: <span class="chip">Monday.com</span></h4>
-    <p>Monday.com supports Hybrid methodology by enabling structured releases and milestones while using incremental sprint cycles for tasks.</p>
-    <ul>
-      <li>More customizable than Trello</li>
-      <li>More versatile than Jira</li>
-      <li>Free basic plan that works for semester project</li>
-    </ul>
-
-    <h4>Key Features Supporting My Project</h4>
-    <ul>
-      <li>Scrum/Kanban boards → Organize work and track progress visually.</li>
-      <li>Backlog management → Prioritize tasks and schedule into sprints/releases.</li>
-      <li>Sprint planning &amp; reporting → Align with Hybrid methodology feedback cycles.</li>
-      <li>Customizable workflows → Create and modify releases (certification, course project, hands-on lab) into phases with feedback loops.</li>
-    </ul>
-
-    
-    </ul>
-  </div>
-</div>
-
-
-<!-- Section: Project Tool Screenshot -->
-<div class="section" id="tool-screenshot">
-  <div class="section-header">
-    <h2 class="section-title">📷 Project Tool Screenshot</h2>
-  </div>
-  <div class="section-content">
-    <p>This screenshot shows my Monday.com project setup.</p>
-    <img src="Google_Cert2.png"
-     alt="Google Cybersecurity Certificate"
-     width="600"
-     loading="lazy"> 
-    <br>
-    <img src="Google_PRO_Cert.png"
-       alt="Google Cybersecurity PRO Certificate"
-       width="600"
-       loading="lazy">
-    <br>
-    <img src="Course_Pro_3.png"
-       alt="Course Project"
-       width="600"
-       loading="lazy">
-  
-  
-  </div>
-</div>
-
-<!-- Footer Note -->
-<div class="section">
-<div class="section-header">
-<h2 class="section-title">📝 Additional Charter Components</h2>
-</div>
-<div class="section-content">
-<div class="instructions">
-<strong>Note for Future Updates:</strong>
-                        This charter will be expanded throughout the semester as we cover additional project management components including:
-                        <ul>
-<li>Project Methodology Selection</li>
-<li>Deliverables &amp; Definition of Done</li>
-<li>High-Level Timeline &amp; Milestones</li>
-<li>Execution Plan Overview</li>
-<li>Risk Register</li>
-<li>Acceptance Criteria</li>
-<li>Project Manager Authority &amp; Approvals</li>
-</ul>
-                        Keep this HTML file - you'll be adding to it as the semester progresses!
-                    </div>
-</div>
-</div>
-</div>
-</div>
-
-
-
-
-
-    <script>
-(function () {
-  const container = document.getElementById('wbs-tabs');
-  if (!container) return;
-
-  // Prevent the browser from auto-scrolling to hash targets on load
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-  const tabs   = Array.from(container.querySelectorAll('[role="tab"]'));
-  const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
-
-  function activate(idx, updateHash=false, focusTab=true) {
-    tabs.forEach((t,i) => {
-      const on = i === idx;
-      t.setAttribute('aria-selected', on);
-      panels[i].hidden = !on;
+  <!-- Scripts -->
+  <script>
+    // Theme Toggle
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
     });
 
-    // Update address bar without triggering a jump
-    if (updateHash) history.replaceState(null, '', '#' + panels[idx].id);
-
-    // Only focus the tab when the user interacts (not on initial load)
-    if (focusTab) tabs[idx].focus();
-  }
-
-  // Click + keyboard
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activate(i, true, true));
-    tab.addEventListener('keydown', e => {
-      const k = e.key; let j = i;
-      if (k === 'ArrowRight') j = (i + 1) % tabs.length;
-      else if (k === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
-      else if (k === 'Home') j = 0;
-      else if (k === 'End') j = tabs.length - 1;
-      else return;
-      e.preventDefault();
-      activate(j, true, true);
-    });
-  });
-
-  // Initial activation based on hash, but DO NOT focus or scroll
-  const idxFromHash = panels.findIndex(p => '#' + p.id === location.hash);
-  activate(idxFromHash >= 0 ? idxFromHash : 0, false, false);
-
-  // After layout settles, force scroll to top so no mid-page jump remains
-  requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
-})();
-</script>
-
-    <script>document.getElementById('themeToggle')?.addEventListener('click',()=>document.body.classList.toggle('dark'));</script>
-
-    <script>
-(function(){
-  const $ = (sel, ctx=document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
-
-  const table = document.getElementById('budgetTable');
-  if(!table) return;
-
-  const money = n => n.toLocaleString(undefined, {style:'currency', currency:'USD', maximumFractionDigits:0});
-  const toNum = v => {
-    if(!v) return 0;
-    v = String(v).trim();
-    // supports "74", "4 months", "$25/hr", "$39/month", "Free"
-    if (/free/i.test(v)) return 0;
-    const m = v.replace(/[^\d.]/g,'');
-    return m ? parseFloat(m) : 0;
-  };
-
-  function calc(){
-    let labor = 0, soft = 0, mat = 0, svc = 0;
-
-    $$('#budgetTable tbody tr[data-type]').forEach(tr=>{
-      const type = tr.getAttribute('data-type');
-      const qty = toNum(tr.querySelector('[data-qty]')?.innerText);
-      const rate = tr.querySelector('[data-rate]')?.innerText || '';
-      const perHour = /hr/i.test(rate);
-      const perMonth = /month/i.test(rate);
-      const amount = toNum(rate);
-
-      let line = 0;
-      if (perHour)  line = qty * amount;
-      else if (perMonth) line = qty * amount;
-      else if (/free/i.test(rate)) line = 0;
-      else line = amount * (qty || 1);
-
-      tr.querySelector('[data-line]').innerText = money(line);
-
-      if(type==='labor') labor += line;
-      else if(type==='fixed'){
-        // categorize by band above it
-        const prevBand = tr.previousElementSibling?.className || '';
-        if (/bt-software/.test(prevBand) || tr.closest('tbody').querySelector('.bt-software')?.compareDocumentPosition(tr) & Node.DOCUMENT_POSITION_PRECEDING === 0) {}
-      }
-    });
-
-    // Compute by scanning band sections for clarity
-    soft = [...table.rows].reduce((s, r)=> s + (r.previousElementSibling && r.previousElementSibling.classList.contains('bt-software') ? 0:0), 0); // placeholder
-
-    // Safer: sum again by walking each band explicitly
-    function sumBetween(startCls, endCls){
-      let sum = 0, on = false;
-      for (const r of table.tBodies[0].rows){
-        if (r.classList.contains(startCls)) on = true;
-        else if (r.classList.contains(endCls)) on = false;
-        else if (on && r.dataset.type === 'fixed'){
-          const n = r.querySelector('[data-line]')?.innerText.replace(/[^0-9.]/g,'');
-          sum += n ? parseFloat(n) : 0;
+    // Collapsible Sections
+    document.querySelectorAll('.collapse-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const content = btn.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
         }
+      });
+    });
+
+    // Initialize collapsed
+    document.querySelectorAll('.section-content').forEach(content => {
+      content.style.maxHeight = null;
+    });
+  </script>
+
+  <!-- WBS Tabs Script -->
+  <script>
+    (function () {
+      const container = document.getElementById('wbs-tabs');
+      if (!container) return;
+      const tabs = [...container.querySelectorAll('[role="tab"]')];
+      const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+      function activate(idx) {
+        tabs.forEach((t,i)=> {
+          const on = i===idx;
+          t.setAttribute('aria-selected', on);
+          panels[i].hidden = !on;
+        });
       }
-      return sum;
-    }
-    soft = sumBetween('bt-software','bt-materials');
-    mat  = sumBetween('bt-materials','bt-services');
-    svc  = sumBetween('bt-services','bt-total'); // until end
+      tabs.forEach((tab,i)=>{
+        tab.addEventListener('click',()=>activate(i,true));
+      });
+      activate(0);
+    })();
+  </script>
 
-    $('#laborSubtotal').innerText = money(labor);
-    $('#softSubtotal').innerText  = money(soft);
-    $('#matSubtotal').innerText   = money(mat);
-    $('#svcSubtotal').innerText   = money(svc);
-
-    const direct = labor + soft + mat + svc;
-    $('#directSubtotal').innerText = money(direct);
-
-    const pct = toNum($('#contPct').innerText) / 100 || 0;
-    const cont = Math.round(direct * pct);
-    $('#contValue').innerText = money(cont);
-
-    $('#grandTotal').innerText = money(direct + cont);
-  }
-
-  table.addEventListener('input', calc);
-  calc(); // initial
-})();
-</script>
-
+  <!-- Budget Auto-Calc Script -->
+  <script>
+    (function(){
+      const table = document.getElementById('budgetTable');
+      if(!table) return;
+      const money = n => n.toLocaleString(undefined, {style:'currency', currency:'USD'});
+      const toNum = v => parseFloat(String(v).replace(/[^0-9.]/g,''))||0;
+      function calc(){
+        let total = 0;
+        table.querySelectorAll('[data-line]').forEach(cell=>{
+          total += toNum(cell.innerText);
+        });
+        document.getElementById('grandTotal').innerText = money(total);
+      }
+      table.addEventListener('input', calc);
+      calc();
+    })();
+  </script>
 </body>
-
-
-
-  
-
-
-  
-
-    <!-- More sections here... -->
+</html>
 
 
   </main>
