@@ -5,59 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Professional Cybersecurity Portfolio - Project Charter</title>
   <style>
-    /* ========== Base / Theme ========== */
+    /* ===== Base & Theme Variables ===== */
     :root {
-      --bg: #f6f7f9;
+      --bg: #f0f8f9;
       --surface: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --brand-1: #006d77;
-      --brand-2: #38b000;
-      --accent: #ffb703;
-      --border: #e5e7eb;
-      --shadow: 0 8px 20px rgba(0,0,0,0.08);
-      --radius-lg: 16px;
-      --radius-sm: 10px;
+      --text: #1e2d3b;
+      --muted: #657786;
+      --primary-light: #a2d5d5;
+      --primary-dark: #69a9a5;
+      --accent: #ffb85f;
+      --border: #d1dfe5;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --radius: 12px;
     }
     .dark {
-      --bg: #0b1320;
-      --surface: #0f172a;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --brand-1: #22d3ee;
-      --brand-2: #10b981;
-      --accent: #fbbf24;
-      --border: #1f2937;
-      --shadow: 0 8px 20px rgba(0,0,0,0.4);
+      --bg: #12232e;
+      --surface: #1e2d3b;
+      --text: #f0f8f9;
+      --muted: #8a9ba8;
+      --primary-light: #3a6973;
+      --primary-dark: #2e4f53;
+      --accent: #ffb85f;
+      --border: #23313a;
+      --shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
     body {
       margin: 0;
-      font-family: system-ui, sans-serif;
+      font-family: “Segoe UI”, Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      transition: background 0.3s, color 0.3s;
-      line-height: 1.6;
+      transition: background .3s, color .3s;
     }
     .container {
-      max-width: 960px;
+      max-width: 900px;
       margin: 32px auto;
       padding: 0 20px;
     }
+    /* Header */
     .header {
-      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
-      color: white;
-      padding: 48px 28px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
       position: relative;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+      color: white;
+      padding: 48px 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
     .header h1 {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
+      margin: 0;
+      font-size: clamp(28px, 5vw, 48px);
     }
     .header p {
-      margin: 0;
+      margin: 4px 0 0;
       opacity: 0.9;
     }
     .header-actions {
@@ -68,80 +66,167 @@
       gap: 8px;
     }
     .btn {
-      background: rgba(255,255,255,0.14);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.25);
+      border: none;
+      color: white;
       padding: 8px 12px;
       border-radius: 999px;
       cursor: pointer;
-      backdrop-filter: blur(6px);
-      transition: transform 0.15s ease, background 0.15s ease;
+      backdrop-filter: blur(4px);
+      transition: background .2s, transform .2s;
     }
     .btn:hover {
+      background: rgba(255,255,255,0.35);
       transform: translateY(-1px);
-      background: rgba(255,255,255,0.24);
     }
+    /* Sections & Collapsible */
     .section {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      margin: 20px 0;
+      border-radius: var(--radius);
+      margin: 24px 0;
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
     .collapse-btn {
       width: 100%;
       text-align: left;
-      padding: 18px 22px;
+      padding: 18px 24px;
       font-size: 18px;
       font-weight: 600;
-      background: linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
+      background: none;
       border: none;
       outline: none;
       cursor: pointer;
-      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      transition: background .2s;
     }
     .collapse-btn:hover {
-      background: rgba(0,0,0,0.05);
+      background: rgba(0,0,0,0.03);
     }
     .collapse-btn.active {
-      color: var(--brand-2);
+      color: var(--primary-dark);
     }
     .section-content {
-      padding: 0 22px;
+      padding: 0 24px;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.3s ease;
+      transition: max-height .4s ease, padding .3s ease;
     }
     .collapse-btn.active + .section-content {
-      padding: 22px;
+      padding: 24px;
+    }
+    /* Text & content styling */
+    h2 {
+      margin-top: 24px;
+      color: var(--primary-dark);
+    }
+    h3, h4 {
+      margin-top: 16px;
+      color: var(--primary-dark);
+    }
+    p, li {
+      line-height: 1.6;
+    }
+    ul {
+      padding-left: 1.2rem;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 12px 0;
+      margin: 16px 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
     }
     thead th {
-      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
-      color: #fff;
-      padding: 10px;
+      background: var(--primary-light);
+      color: var(--text);
+      padding: 12px;
       text-align: left;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr:nth-child(even) {
+      background: rgba(0,0,0,0.02);
     }
     td, th {
       padding: 10px;
-      border-bottom: 1px solid var(--border);
     }
-    tbody tr:nth-child(odd) {
-      background: rgba(0,0,0,0.02);
-    }
-    tbody tr:hover {
-      background: rgba(26,188,156,0.08);
-    }
-    .text-right {
-      text-align: right;
+    img {
+      max-width: 100%;
+      margin: 12px 0;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
   </style>
-
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Theme toggle
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+      });
+      // Collapsibles
+      document.querySelectorAll('.collapse-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          const content = btn.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }
+        });
+      });
+      // Start all collapsed
+      document.querySelectorAll('.section-content').forEach(sc => {
+        sc.style.maxHeight = null;
+      });
+      // WBS tabs (if any tabs)
+      const tabContainers = document.querySelectorAll('.tabs');
+      tabContainers.forEach(container => {
+        const tabs = Array.from(container.querySelectorAll('[role="tab"]'));
+        const panels = tabs.map(t => {
+          const ctrl = t.getAttribute('aria-controls');
+          return document.getElementById(ctrl);
+        });
+        function activate(i) {
+          tabs.forEach((t, idx) => {
+            const sel = idx === i;
+            t.setAttribute('aria-selected', sel);
+            panels[idx].hidden = !sel;
+          });
+        }
+        tabs.forEach((t, i) => {
+          t.addEventListener('click', () => activate(i));
+        });
+        activate(0);
+      });
+      // Budget auto-calc (if budget table with data-line)
+      const budgetTable = document.getElementById('budgetTable');
+      if (budgetTable) {
+        const money = n => n.toLocaleString(undefined, { style: 'currency', currency: 'USD' });
+        const toNum = v => parseFloat(String(v).replace(/[^0-9.]/g, '')) || 0;
+        function recalc() {
+          let total = 0;
+          budgetTable.querySelectorAll('[data-line]').forEach(cell => {
+            total += toNum(cell.innerText);
+          });
+          const gt = document.getElementById('grandTotal');
+          if (gt) gt.innerText = money(total);
+        }
+        budgetTable.addEventListener('input', recalc);
+        recalc();
+      }
+    });
+  </script>
+</head>
+<body>
   <div class="container">
     <div class="header">
       <div class="header-actions">
@@ -154,7 +239,7 @@
 
     <div class="content">
       <div class="section">
-        <button class="collapse-btn">👩‍🎓 Student Information</button>
+        <button class="collapse-btn">Student Information</button>
         <div class="section-content">
           <p><strong>Student Name:</strong> Elaine Li</p>
           <p><strong>Course:</strong> Managing IT Projects</p>
@@ -163,14 +248,14 @@
       </div>
 
       <div class="section">
-        <button class="collapse-btn">📋 1. Project Goal & Description</button>
+        <button class="collapse-btn">1. Project Goal & Description</button>
         <div class="section-content">
-          <p>Secure an entry-level job in cybersecurity/IT by building and showcasing a professional cybersecurity portfolio that highlights certifications, hands-on labs, LinkedIn Learning courses, and capstone course projects, demonstrating practical skills and workplace readiness.</p>
+          <p>Secure an entry-level job in cybersecurity/IT by developing practical cybersecurity skills and workplace readiness through certifications, hands-on virtual labs, capstone project, and updating my resume/LinkedIn profile.</p>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">🎯 2. Vision, Mission & Strategy Alignment</button>
+        <button class="collapse-btn">2. Vision, Mission & Strategy Alignment</button>
         <div class="section-content">
           <h4>Personal Mission Connection:</h4>
           <p>My mission is to help organizations strengthen their networks, systems, and data by identifying vulnerabilities, implementing security measures, and responding to incidents. My goal is to protect sensitive data from data breaches and cyber threats while also ensuring integrity.</p>
@@ -182,7 +267,7 @@
       </div>
 
       <div class="section">
-        <button class="collapse-btn">💼 3. Business Case & Justification</button>
+        <button class="collapse-btn">3. Business Case & Justification</button>
         <div class="section-content">
           <h4>Professional Value:</h4>
           <p>This project will benefit my career by allowing me to gain certifications, hands-on experience, and build a professional portfolio that demonstrates my cybersecurity skills to employers. These will help strengthen my resume and increase my opportunity for entry-level IT and cybersecurity positions.</p>
@@ -194,13 +279,13 @@
       </div>
 
       <div class="section">
-        <button class="collapse-btn">📏 4. High-Level Scope</button>
+        <button class="collapse-btn">4. High-Level Scope</button>
         <div class="section-content">
           <h4>✅ In Scope for Semester Project</h4>
           <ul>
-            <li>Complete at least one entry-level cybersecurity certification (e.g., Google Cybersecurity Professional Certificate, ISC2 CC, CompTIA Security+ etc.)</li>
-            <li>Complete hands-on virtual labs related to cybersecurity/IT field demonstrating technical skills (e.g. TryHackMe, etc.)</li>
-            <li>Complete selected LinkedIn Learning courses in cybersecurity/IT.</li>
+            <li>Complete at least one entry-level cybersecurity certification (e.g., Google Cybersecurity Professional Certificate, ISC2 CC, CompTIA Security+, etc.)</li>
+            <li>Complete hands-on virtual labs related to cybersecurity/IT field demonstrating technical skills (e.g., TryHackMe, etc.)</li>
+            <li>Complete selected LinkedIn Learning courses in cybersecurity/IT (e.g., Cybersecurity Foundations, Practical Cybersecurity for IT Professionals, Cybersecurity Foundations: Security Architecture, etc.)</li>
             <li>Complete Capstone Cybersecurity course project.</li>
           </ul>
           <h4>🗺️ Roadmap Items (≤6 Months)</h4>
@@ -208,7 +293,7 @@
             <li>Pursue additional cybersecurity certifications</li>
             <li>Build one additional visualization project in a different tool to expand skills.</li>
             <li>Expand my portfolio with certifications and achievements.</li>
-            <li>Complete additional hands-on virtual labs / simulations</li>
+            <li>Complete additional hands-on virtual labs/stimulations</li>
             <li>Update portfolio and add certifications on LinkedIn</li>
           </ul>
           <h4>❌ Out of Scope</h4>
@@ -216,103 +301,85 @@
             <li>Completion of international certifications requiring more than a year of preparation (e.g., CISSP, CISM)</li>
             <li>Development of a full-scale enterprise security tool or application (requires extensive resources)</li>
             <li>Creation of custom cybersecurity hardware (e.g., IoT penetration device)</li>
+            <li>Graduate-level research publications related to cybersecurity</li>
           </ul>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">👥 5. Stakeholder Register</button>
+        <button class="collapse-btn">5. Stakeholder Register</button>
         <div class="section-content">
           <table>
             <thead>
-              <tr>
-                <th>Stakeholder</th><th>Category</th><th>Role/Interest</th><th>Power</th><th>Interest</th><th>Engagement Strategy</th>
-              </tr>
+              <tr><th>Stakeholder</th><th>Category</th><th>Role/Interest</th><th>Power</th><th>Interest</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Professors</td><td>Internal</td><td>Course evaluator, sets project expectations</td><td>High</td><td>High</td><td>Provide regular updates; seek feedback</td>
-              </tr>
-              <tr>
-                <td>Class Peers</td><td>Internal</td><td>Provide peer feedback & collaboration</td><td>Low</td><td>Medium</td><td>Share project progress; invite feedback</td>
-              </tr>
-              <tr>
-                <td>Academic Advisor</td><td>Internal</td><td>Guidance aligning coursework & career</td><td>Medium</td><td>High</td><td>Keep informed; request advice</td>
-              </tr>
-              <tr>
-                <td>Future Employers</td><td>External</td><td>End-users/hiring decision makers</td><td>High</td><td>High</td><td>Show portfolio updates & skills</td>
-              </tr>
-              <tr>
-                <td>Google (Certification Provider)</td><td>External</td><td>Provide certification framework/exam</td><td>High</td><td>Low</td><td>Complete requirements; show certification</td>
-              </tr>
-              <tr>
-                <td>University Career Services</td><td>Internal</td><td>Support job placement & career readiness</td><td>Medium</td><td>High</td><td>Share certification and portfolio progress</td>
-              </tr>
-              <tr>
-                <td>Personal Support System</td><td>External</td><td>Provide moral/emotional support</td><td>Low</td><td>Medium</td><td>Minimal updates on progress</td>
-              </tr>
-              <tr>
-                <td>LinkedIn</td><td>External</td><td>Networking / showcasing platform</td><td>Medium</td><td>Medium</td><td>Share credentials & progress</td>
-              </tr>
+              <tr><td>Professors</td><td>Internal</td><td>Course evaluator, sets project expectations</td><td>High</td><td>High</td></tr>
+              <tr><td>Class Peers</td><td>Internal</td><td>Provide peer feedback and collaboration in discussions</td><td>Low</td><td>Medium</td></tr>
+              <tr><td>Academic Advisor</td><td>Internal</td><td>Provides guidance on aligning coursework with academic career</td><td>Medium</td><td>High</td></tr>
+              <tr><td>Future Employers</td><td>External</td><td>End-users as hiring criteria</td><td>High</td><td>High</td></tr>
+              <tr><td>Google (Certification Provider)</td><td>External</td><td>Provides certification framework and exam</td><td>High</td><td>Low</td></tr>
+              <tr><td>University Career Services</td><td>Internal</td><td>Supports career readiness and job placement</td><td>Medium</td><td>High</td></tr>
+              <tr><td>Personal Support System</td><td>External</td><td>Provides moral support</td><td>Low</td><td>Medium</td></tr>
+              <tr><td>LinkedIn</td><td>External</td><td>Networking platform for showcasing certifications, progress, and achievements</td><td>Medium</td><td>Medium</td></tr>
+            </tbody>
+          </table>
+          <p><em>Power-Interest Grid Visualization (image)</em></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <button class="collapse-btn">6. Deliverables</button>
+        <div class="section-content">
+          <table>
+            <thead>
+              <tr><th>Deliverable</th><th>Type</th><th>SMART Description</th><th>Definition of Done</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Google Cybersecurity Professional Certificate</td><td>Tangible</td><td>Earn an entry-level certification by the end of the semester</td><td>Certification of completion or proof of certification completion received.</td></tr>
+              <tr><td>Hands-On Virtual Lab</td><td>Tangible</td><td>Complete a guided hands-on virtual lab by the end of the semester.</td><td>Lab completed with results/proof documented.</td></tr>
+              <tr><td>LinkedIn Learning Courses</td><td>Tangible</td><td>Complete LinkedIn Learning courses related to cybersecurity by the end of the semester.</td><td>Courses completed with certificates of completion that can be added to LinkedIn and my portfolio.</td></tr>
+              <tr><td>Capstone Cybersecurity Course Project</td><td>Tangible</td><td>Complete a cybersecurity related course project by the end of the semester.</td><td>Project is completed, documented, and showcased in your portfolio.</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">📦 6. Deliverables</button>
+        <button class="collapse-btn">Work Breakdown Structure (WBS)</button>
         <div class="section-content">
-          <table>
-            <thead>
-              <tr>
-                <th>Deliverable</th><th>Type</th><th>SMART Description</th><th>Definition of Done</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Google Cybersecurity Professional Certificate</td><td>Tangible</td><td>Earn an entry-level certification by end of semester</td><td>Proof of certification completion</td></tr>
-              <tr><td>Hands-On Virtual Lab</td><td>Tangible</td><td>Complete guided hands-on lab by end of semester</td><td>Documented lab results & report</td></tr>
-              <tr><td>LinkedIn Learning Courses</td><td>Tangible</td><td>Complete cybersecurity courses by semester end</td><td>Certificates of completion added to portfolio</td></tr>
-              <tr><td>Capstone Cybersecurity Course Project</td><td>Tangible</td><td>Complete a cybersecurity related course project by semester end</td><td>Project documented & showcased</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="section">
-        <button class="collapse-btn">🧩 Work Breakdown Structure (WBS)</button>
-        <div class="section-content">
-          <div id="wbs-tabs" class="tabs">
+          <div class="tabs">
             <div class="tablist" role="tablist" aria-label="WBS Deliverables">
-              <button role="tab" id="tab-d1" aria-controls="panel-d1" aria-selected="true">Deliverable 1</button>
-              <button role="tab" id="tab-d2" aria-controls="panel-d2" aria-selected="false">Deliverable 2</button>
-              <button role="tab" id="tab-d3" aria-controls="panel-d3" aria-selected="false">Deliverable 3</button>
-              <button role="tab" id="tab-d4" aria-controls="panel-d4" aria-selected="false">Deliverable 4</button>
+              <button role="tab" id="tab1" aria-controls="panel1" aria-selected="true">Deliverable 1</button>
+              <button role="tab" id="tab2" aria-controls="panel2" aria-selected="false">Deliverable 2</button>
+              <button role="tab" id="tab3" aria-controls "panel3" aria-selected="false">Deliverable 3</button>
+              <button role="tab" id="tab4" aria-controls="panel4" aria-selected="false">Deliverable 4</button>
             </div>
-            <div id="panel-d1" class="tabpanel" role="tabpanel">
+            <div id="panel1" class="tabpanel" role="tabpanel">
               <h4>Google Cybersecurity Professional Certificate</h4>
               <table>
                 <thead><tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr></thead>
                 <tbody>
                   <tr><td>1.0</td><td>Deliverable</td><td>Cybersecurity Certificate</td><td></td><td></td></tr>
-                  <tr><td>1.1</td><td>Work Package</td><td>Planning & Preparation</td><td></td><td></td></tr>
+                  <tr><td>1.1</td><td>Work Package</td><td>Planning and Preparation</td><td></td><td></td></tr>
                   <tr><td>1.1.1</td><td>Task</td><td>Research type of certification</td><td>2.0</td><td></td></tr>
-                  <tr><td>1.1.2</td><td>Task</td><td>Select target certification</td><td>3.0</td><td>1.1.1</td></tr>
-                  <tr><td>1.1.3</td><td>Task</td><td>Register exam & gather study materials</td><td>1.0</td><td>1.1.2</td></tr>
+                  <tr><td>1.1.2</td><td>Task</td><td>Selecting target certification</td><td>3.0</td><td>1.1.1</td></tr>
+                  <tr><td>1.1.3</td><td>Task</td><td>Register account & secure resources</td><td>1.0</td><td>1.1.2</td></tr>
                   <tr><td>1.2</td><td>Work Package</td><td>Study & Training</td><td></td><td></td></tr>
-                  <tr><td>1.2.1</td><td>Task</td><td>Develop study plan with milestones</td><td>3.0</td><td></td></tr>
+                  <tr><td>1.2.1</td><td>Task</td><td>Develop study plan</td><td>3.0</td><td></td></tr>
                   <tr><td>1.2.2</td><td>Task</td><td>Complete training modules</td><td>3.0</td><td>1.2.1</td></tr>
-                  <tr><td>1.2.3</td><td>Task</td><td>Create study notes & guides</td><td>2.0</td><td>1.2.2</td></tr>
+                  <tr><td>1.2.3</td><td>Task</td><td>Take detailed notes & create guides</td><td>2.0</td><td>1.2.2</td></tr>
                   <tr><td>1.3</td><td>Work Package</td><td>Practice & Assessment</td><td></td><td></td></tr>
                   <tr><td>1.3.1</td><td>Task</td><td>Complete practice quizzes</td><td>5.0</td><td></td></tr>
                   <tr><td>1.3.2</td><td>Task</td><td>Review & retake weak areas</td><td>5.0</td><td>1.3.1</td></tr>
                   <tr><td>1.4</td><td>Work Package</td><td>Exam Completion</td><td></td><td></td></tr>
-                  <tr><td>1.4.1</td><td>Task</td><td>Final review before exam</td><td>2.0</td><td></td></tr>
-                  <tr><td>1.4.2</td><td>Task</td><td>Take certification exam & pass</td><td>1.0</td><td>1.4.1</td></tr>
+                  <tr><td>1.4.1</td><td>Task</td><td>Final review of key concepts</td><td>2.0</td><td></td></tr>
+                  <tr><td>1.4.2</td><td>Task</td><td>Take certification exam</td><td>1.0</td><td>1.4.1</td></tr>
                   <tr><td>1.4.3</td><td>Task</td><td>Obtain proof & upload to portfolio</td><td>1.0</td><td>1.4.2</td></tr>
                 </tbody>
               </table>
             </div>
-            <div id="panel-d2" class="tabpanel" role="tabpanel" hidden>
+            <div id="panel2" class="tabpanel" hidden>
               <h4>Deliverable 2 – Capstone Course Project</h4>
               <table>
                 <thead><tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr></thead>
@@ -320,34 +387,30 @@
                   <tr><td>1.0</td><td>Deliverable</td><td>Capstone Course Project</td><td></td><td></td></tr>
                   <tr><td>1.1</td><td>Work Package</td><td>Project Planning</td><td></td><td></td></tr>
                   <tr><td>1.1.1</td><td>Task</td><td>Select project topic</td><td>3.0</td><td></td></tr>
-                  <tr><td>1.1.2</td><td>Task</td><td>Define scope, objectives & requirements</td><td>3.0</td><td>1.1.1</td></tr>
+                  <tr><td>1.1.2</td><td>Task</cd><td>Define project objectives & requirements</td><td>3.0</td><td>1.1.1</td></tr>
                   <tr><td>1.1.3</td><td>Task</td><td>Develop timeline & milestones</td><td>3.0</td><td>1.1.2</td></tr>
                   <tr><td>1.2</td><td>Work Package</td><td>Research & Preparation</td><td></td><td></td></tr>
-                  <tr><td>1.2.1</td><td>Task</td><td>Research risk assessment</td><td>5.0</td><td></td></tr>
-                  <tr><td>1.2.2</td><td>Task</td><td>Define hazards, attacks, vulnerabilities</td><td>5.0</td><td>1.2.1</td></tr>
+                  <tr><td>1.2.1</td><td>Task</td><td>Conduct research on risk assessment</td><td>5.0</td><td></td></tr>
+                  <tr><td>1.2.2</td><td>Task</td><td>Define hazards, attacks, threats</td><td>5.0</td><td>1.2.1</td></tr>
                   <tr><td>1.2.3</td><td>Task</td><td>Document mitigation plan</td><td>5.0</td><td>1.2.2</td></tr>
-                  <tr><td>1.3</td><td>Work Package</td><td>Execution</td><td></td><td></td></tr>
-                  <tr><td>1.3.1</td><td>Task</td><td>Identify critical business functions</td><td>5.0</td><td></td></tr>
-                  <tr><td>1.3.2</td><td>Task</td><td>Develop recovery goals & requirements</td><td>4.0</td><td>1.3.1</td></tr>
-                  <tr><td>1.3.3</td><td>Task</td><td>Document RPO & requirements</td><td>3.0</td><td>1.3.2</td></tr>
-                  <tr><td>1.3.4</td><td>Task</td><td>Review & adjust project</td><td>2.0</td><td>1.3.3</td></tr>
+                  <tr><td>1.3</td><td>Work Package</td><td>Project Execution</td><td></td><td></td></tr>
+                  <tr><td>1.3.1</td><td>Task</td><td>Identify business functions</td><td>5.0</td><td></td></tr>
+                  <tr><td>1.3.2</td><td>Task</td><td>Develop recovery goals</td><td>4.0</td><td>1.3.1</td></tr>
+                  <tr><td>1.3.3</td><td>Task</td><td>Document recovery & RPO</td><td>3.0</td><td>1.3.2</td></tr>
+                  <tr><td>1.3.4</td><td>Task</td><td>Review & adjust</td><td>2.0</td><td>1.3.3</td></tr>
                   <tr><td>1.4</td><td>Work Package</td><td>Progress Report</td><td></td><td></td></tr>
-                  <tr><td>1.4.1</td><td>Task</td><td>Draft report</td><td>5.0</td><td></td></tr>
+                  <tr><td>1.4.1</td><td>Task</td><td>Draft project info</td><td>5.0</td><td></td></tr>
                   <tr><td>1.4.2</td><td>Task</td><td>Create resumption strategies</td><td>3.0</td><td>1.4.1</td></tr>
-                  <tr><td>1.4.3</td><td>Task</td><td>Complete business function table</td><td>2.0</td><td>1.4.2</td></tr>
+                  <tr><td>1.4.3</td><td>Task</td><td>Complete resumption table</td><td>2.0</td><td>1.4.2</td></tr>
                   <tr><td>1.4.4</td><td>Task</td><td>Create employee contact list</td><td>1.0</td><td>1.4.3</td></tr>
                   <tr><td>1.4.5</td><td>Task</td><td>Create vendor contact list</td><td>1.0</td><td>1.4.4</td></tr>
-                  <tr><td>1.4.6</td><td>Task</td><td>Family emergency plan</td><td>1.0</td><td>1.4.5</td></tr>
-                  <tr><td>1.4.6 (again)</td><td>Task</td><td>Research insurance coverage</td><td>2.0</td><td>1.4.5</td></tr>
-                  <tr><td>1.4.7</td><td>Task</td><td>Research cybersecurity tools</td><td>2.0</td><td>1.4.6</td></tr>
-                  <tr><td>1.5</td><td>Work Package</td><td>Project Submission</td><td></td><td></td></tr>
-                  <tr><td>1.5.1</td><td>Task</td><td>Finalize project</td><td>1.0</td><td></td></tr>
-                  <tr><td>1.5.2</td><td>Task</td><td>Review entire project</td><td>2.0</td><td>1.5.1</td></tr>
-                  <tr><td>1.5.3</td><td>Task</td><td>Submit final report</td><td>1.0</td><td>1.5.2</td></tr>
+                  <tr><td>1.4.6</td><td>Task</td><td>Create family emergency plan</td><td>1.0</td><td>1.4.5</td></tr>
+                  <tr><td>1.4.7</td><td>Task</td><td>Research insurance coverages</td><td>2.0</td><td>1.4.6</td></tr>
+                  <tr><td>1.4.8</td><td>Task</td><td>Create storyboard</td><td>2.0</td><td>1.4.7</td></tr>
                 </tbody>
               </table>
             </div>
-            <div id="panel-d3" class="tabpanel" role="tabpanel" hidden>
+            <div id="panel3" class="tabpanel" hidden>
               <h4>Deliverable 3 – Hands-On Virtual Lab</h4>
               <table>
                 <thead><tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr></thead>
@@ -358,243 +421,161 @@
                   <tr><td>1.1.2</td><td>Task</td><td>Set up lab environment</td><td>2.0</td><td>1.1.1</td></tr>
                   <tr><td>1.1.3</td><td>Task</td><td>Verify access to tools/resources</td><td>2.0</td><td>1.1.2</td></tr>
                   <tr><td>1.2</td><td>Work Package</td><td>Lab Execution</td><td></td><td></td></tr>
-                  <tr><td>1.2.1</td><td>Task</td><td>Initial configuration tasks</td><td>2.0</td><td></td></tr>
-                  <tr><td>1.2.2</td><td>Task</td><td>Follow guided attack/defense scenario</td><td>3.0</td><td>1.2.1</td></tr>
-                  <tr><td>1.2.3</td><td>Task</td><td>Capture evidence / screenshots</td><td>3.0</td><td>1.2.2</td></tr>
-                  <tr><td>1.2.4</td><td>Task</td><td>Troubleshoot & repeat if errors</td><td>3.0</td><td>1.2.3</td></tr>
+                  <tr><td>1.2.1</td><td>Task</td><td>Complete initial configuration</td><td>2.0</td><td></td></tr>
+                  <tr><td>1.2.2</td><td>Task</td><td>Run guided scenario</td><td>3.0</td><td>1.2.1</td></tr>
+                  <tr><td>1.2.3</td><td>Task</td><td>Capture evidence / screenshot</td><td>3.0</td><td>1.2.2</td></tr>
+                  <tr><td>1.2.4</td><td>Task</td><td>Troubleshoot & repeat if error</td><td>3.0</td><td>1.2.3</td></tr>
                   <tr><td>1.3</td><td>Work Package</td><td>Documentation</td><td></td><td></td></tr>
                   <tr><td>1.3.1</td><td>Task</td><td>Write summary of lab progress</td><td>2.0</td><td></td></tr>
                   <tr><td>1.3.2</td><td>Task</td><td>Document key findings</td><td>1.0</td><td>1.3.1</td></tr>
                   <tr><td>1.3.3</td><td>Task</td><td>Review lab report</td><td>2.0</td><td>1.3.2</td></tr>
                   <tr><td>1.4</td><td>Work Package</td><td>Lab Submission</td><td></td><td></td></tr>
-                  <tr><td>1.4.1</td><td>Task</td><td>Proofread & finalize lab report</td><td>2.0</td><td></td></tr>
-                  <tr><td>1.4.2</td><td>Task</td><td>Submit completed lab report</td><td>1.0</td><td>1.4.1</td></tr>
+                  <tr><td>1.4.1</td><td>Task</td><td>Proofread & finalize report</td><td>2.0</td><td></td></tr>
+                  <tr><td>1.4.2</td><td>Task</td><td>Submit lab report</td><td>1.0</td><td>1.4.1</td></tr>
                 </tbody>
               </table>
             </div>
-            <div id="panel-d4" class="tabpanel" role="tabpanel" hidden>
-              <p>(No WBS defined for Deliverable 4 in original content)</p>
+            <div id="panel4" class="tabpanel" hidden>
+              <p>No details provided for Deliverable 4 in original content.</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">💵 Budget & Cost Estimate</button>
+        <button class="collapse-btn">Budget & Cost Estimate</button>
         <div class="section-content">
-          <table class="budget-table" id="budgetTable">
+          <p><strong>Cost Item | Quantity/Hours | Rate/Price | Total Cost</strong></p>
+          <table id="budgetTable" class="budget-table">
             <thead>
-              <tr><th>Cost Item</th><th>Quantity/Hours</th><th>Rate/Price</th><th class="text-right">Total Cost</th></tr>
+              <tr><th>Cost Item</th><th>Quantity/Hours</th><th>Rate/Price</th><th>Total Cost</th></tr>
             </thead>
             <tbody>
-              <tr><td colspan="4"><strong>LABOR COSTS</strong></td></tr>
+              <tr><td colspan="4"><em>LABOR COSTS</em></td></tr>
               <tr data-type="labor">
                 <td>Cyber Security Analyst / Student Researcher</td>
                 <td contenteditable="true">160</td>
-                <td contenteditable="true">$35</td>
-                <td class="text-right" data-line>$5,600</td>
+                <td contenteditable="true">$35/hr</td>
+                <td data-line>$5,600</td>
               </tr>
               <tr data-type="labor">
                 <td>Designer</td>
                 <td contenteditable="true">12</td>
-                <td contenteditable="true">$8</td>
-                <td class="text-right" data-line>$96</td>
+                <td contenteditable="true">$8/hr</td>
+                <td data-line>$96</td>
               </tr>
               <tr data-type="labor">
                 <td>Project Manager</td>
                 <td contenteditable="true">20</td>
-                <td contenteditable="true">$60</td>
-                <td class="text-right" data-line>$1,200</td>
+                <td contenteditable="true">$60/hr</td>
+                <td data-line>$1,200</td>
               </tr>
-              <tr><td colspan="3"><strong>LABOR SUBTOTAL</strong></td><td class="text-right">$7,820</td></tr>
-              <tr><td colspan="4"><strong>EQUIPMENT / SOFTWARE COSTS</strong></td></tr>
-              <tr data-type="equip">
+              <tr>
+                <td colspan="3"><strong>LABOR SUBTOTAL</strong></td>
+                <td><strong id="labSubtotal">$7,820</strong></td>
+              </tr>
+              <tr><td colspan="4"><em>EQUIPMENT / SOFTWARE COSTS</em></td></tr>
+              <tr>
                 <td>Software License (TryHackMe annual)</td>
                 <td contenteditable="true">1</td>
-                <td contenteditable="true">$80</td>
-                <td class="text-right" data-line>$80</td>
+                <td contenteditable="true">$80/yr</td>
+                <td data-line>$80</td>
               </tr>
-              <tr data-type="equip">
+              <tr>
                 <td>Cybersecurity Training Content & Certification</td>
                 <td contenteditable="true">1</td>
                 <td contenteditable="true">$0</td>
-                <td class="text-right" data-line>$0</td>
+                <td data-line>$0</td>
               </tr>
-              <tr><td colspan="3"><strong>EQUIPMENT/SOFTWARE SUBTOTAL</strong></td><td class="text-right">$80</td></tr>
-              <tr><td colspan="4"><strong>MATERIALS COSTS</strong></td></tr>
-              <tr data-type="mat">
+              <tr>
+                <td colspan="3"><strong>EQUIPMENT/SOFTWARE SUBTOTAL</strong></td>
+                <td><strong id="equipSubtotal">$80</strong></td>
+              </tr>
+              <tr><td colspan="4"><em>MATERIALS COSTS</em></td></tr>
+              <tr>
                 <td>Training materials & documentation assets</td>
                 <td contenteditable="true">1</td>
                 <td contenteditable="true">$0</td>
-                <td class="text-right" data-line>$0</td>
+                <td data-line>$0</td>
               </tr>
-              <tr><td colspan="3"><strong>MATERIALS SUBTOTAL</strong></td><td class="text-right">$0</td></tr>
-              <tr><td colspan="4"><strong>SERVICES COSTS</strong></td></tr>
-              <tr data-type="serv">
-                <td>Network Services & 3rd-Party APIs</td>
+              <tr>
+                <td colspan="3"><strong>MATERIALS SUBTOTAL</strong></td>
+                <td><strong id="matSubtotal">$0</strong></td>
+              </tr>
+              <tr><td colspan="4"><em>SERVICES COSTS</em></td></tr>
+              <tr>
+                <td>Network Services & APIs / Third-Party</td>
                 <td contenteditable="true">1</td>
                 <td contenteditable="true">$0</td>
-                <td class="text-right" data-line>$0</td>
+                <td data-line>$0</td>
               </tr>
-              <tr data-type="serv">
+              <tr>
                 <td>Backup Storage (Cloud) 6 months</td>
                 <td contenteditable="true">6</td>
-                <td contenteditable="true">$2</td>
-                <td class="text-right" data-line>$12</td>
+                <td contenteditable="true">$2/mo</td>
+                <td data-line>$12</td>
               </tr>
-              <tr><td colspan="3"><strong>SERVICES SUBTOTAL</strong></td><td class="text-right">$12</td></tr>
-              <tr><td colspan="3"><strong>SUBTOTAL DIRECT COSTS</strong></td><td class="text-right">$7,912</td></tr>
-              <tr><td colspan="3"><strong>Contingency Reserve 20%</strong></td><td class="text-right">$1,582.40</td></tr>
-              <tr><td colspan="3"><strong>TOTAL PROJECT BUDGET</strong></td><td class="text-right" id="grandTotal">$9,494.40</td></tr>
+              <tr>
+                <td colspan="3"><strong>SERVICES SUBTOTAL</strong></td>
+                <td><strong id="servSubtotal">$12</strong></td>
+              </tr>
+              <tr>
+                <td colspan="3"><strong>SUBTOTAL DIRECT COSTS</strong></td>
+                <td><strong id="directSubtotal">$7,912</strong></td>
+              </tr>
+              <tr>
+                <td colspan="3"><strong>Contingency Reserve 20%</strong></td>
+                <td data-line>$1,582.4</td>
+              </tr>
+              <tr>
+                <td colspan="3"><strong>TOTAL PROJECT BUDGET</strong></td>
+                <td id="grandTotal">$9,494.4</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">🧭 Project Methodology (Hybrid: Incremental)</button>
+        <button class="collapse-btn">Project Methodology (Hybrid: Incremental)</button>
         <div class="section-content">
           <p><strong>Requirements:</strong> Deliverables are well-defined (certificate, course project, hands-on lab)</p>
           <p><strong>Delivery Cadence:</strong> To reduce risk, the project is divided into three major releases instead of one final delivery.</p>
-          <ul>
-            <li>Release 1 (Week 1–14): Submitted & Presented Course Project</li>
-            <li>Release 2 (Week 5–8): Completed Certification</li>
-            <li>Release 3 (Week 10–13): Completed Hands-On Lab</li>
-          </ul>
-          <p><strong>Why Hybrid?</strong> This approach allows me to adjust/adapt along the way — ideal for a semester project with fixed requirements.</p>
+          <p><strong>Release 1 (Week 1-14):</strong> Submit & present course project</p>
+          <p><strong>Release 2 (Week 5-8):</strong> Complete certification</p>
+          <p><strong>Release 3 (Week 10-13):</strong> Complete hands-on lab</p>
+          <p><strong>Why Hybrid?</strong> This approach allows me to adjust/adapt along the way which is ideal for a semester project with fixed requirements.</p>
+          <p><em>Project Methodology Diagram (image)</em></p>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">📊 Hybrid: Incremental Release Schedule</button>
+        <button class="collapse-btn">Hybrid: Incremental Release Schedule</button>
         <div class="section-content">
-          <h4>Release 1</h4>
-          <p>Weeks 5–8:</p>
-          <ul>
-            <li>Plan Cybersecurity Certificate</li>
-            <li>Train & Practice Materials</li>
-            <li>Complete Exam</li>
-          </ul>
-          <p>→ Feedback</p>
-          <h4>Release 2</h4>
-          <p>Weeks 1–14:</p>
-          <ul>
-            <li>Plan & Research Course Project</li>
-            <li>Execute Project</li>
-            <li>Progress Report & Submit Project</li>
-          </ul>
-          <p>→ Feedback</p>
-          <h4>Release 3</h4>
-          <p>Weeks 10–13:</p>
-          <ul>
-            <li>Prepare Lab Tools/Materials</li>
-            <li>Execute Lab Stimulation</li>
-            <li>Document & Submit Lab Report</li>
-          </ul>
+          <p><strong>Release 1 (Weeks 5–8):</strong> Plan Certification, Train, Practice, Complete Exam</p>
+          <p><strong>Release 2 (Weeks 1–14):</strong> Plan & Research Course Project, Execute & Submit</p>
+          <p><strong>Release 3 (Weeks 10–13):</strong> Prepare Lab Tools, Execute Lab, Document & Submit Report</p>
         </div>
       </div>
 
       <div class="section">
-        <button class="collapse-btn">🛠 Tool Selection & Setup</button>
+        <button class="collapse-btn">Tool Selection & Setup</button>
         <div class="section-content">
           <h4>Tools Explored:</h4>
           <ul>
-            <li>Trello → Simple Kanban, but lacks dependencies</li>
-            <li>Monday.com → Flexible UI, supports hybrid & sprints</li>
-            <li>Jira → Agile-oriented with Scrum/Kanban, backlog management</li>
+            <li>Trello → Simple Kanban, lacks advanced dependencies</li>
+            <li>Monday.com → UI + flexibility + sprint planning support</li>
+            <li>Jira → Agile tools, backlog, sprints</li>
           </ul>
-          <h4>Final Choice: Monday.com</h4>
-          <p>Monday.com supports hybrid methodology by enabling structured releases and sprints while using feedback cycles. It’s more customizable than Trello, more versatile than Jira, and has a free plan that fits a semester project.</p>
-        </div>
-      </div>
-
-      <div class="section">
-        <button class="collapse-btn">📷 Project Tool Screenshot</button>
-        <div class="section-content">
-          <p>(Your screenshot image here — ensure correct path)</p>
-        </div>
-      </div>
-
-      <div class="section">
-        <button class="collapse-btn">📝 Additional Charter Components</button>
-        <div class="section-content">
-          <p>Note for Future Updates: This charter will be expanded throughout the semester as we cover additional project management components including:</p>
+          <p><strong>Final Choice: Monday.com</strong></p>
           <ul>
-            <li>Project Methodology Selection</li>
-            <li>Deliverables & Definition of Done</li>
-            <li>High-Level Timeline & Milestones</li>
-            <li>Execution Plan Overview</li>
-            <li>Risk Register</li>
-            <li>Acceptance Criteria</li>
-            <li>Project Manager Authority & Approvals</li>
+            <li>Supports hybrid methodology (structured releases + incremental sprints)</li>
+            <li>Flexible interface, task dependencies, reporting</li>
+            <li>Free/basic plan sufficient for a semester project</li>
           </ul>
-          <p>Keep this HTML file — you'll be adding to it as the semester progresses!</p>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script>
-    // Theme Toggle
-    document.getElementById('themeToggle')?.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-    });
-    // Collapsible Section Logic
-    document.querySelectorAll('.collapse-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        const content = btn.nextElementSibling;
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      });
-    });
-    // Initialize collapsed
-    document.querySelectorAll('.section-content').forEach(div => {
-      div.style.maxHeight = null;
-    });
-    // WBS tabs
-    (function(){
-      const container = document.getElementById('wbs-tabs');
-      if (!container) return;
-      const tabs = Array.from(container.querySelectorAll('[role="tab"]'));
-      const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
-      function activate(i) {
-        tabs.forEach((t, idx) => {
-          const sel = idx === i;
-          t.setAttribute('aria-selected', sel);
-          panels[idx].hidden = !sel;
-        });
-      }
-      tabs.forEach((tab,i) => {
-        tab.addEventListener('click', () => activate(i));
-      });
-      activate(0);
-    })();
-    // Budget auto calculation
-    (function(){
-      const table = document.getElementById('budgetTable');
-      if (!table) return;
-      function parseMoney(str) {
-        return parseFloat(str.replace(/[^0-9.]/g, '')) || 0;
-      }
-      function formatMoney(n) {
-        return n.toLocaleString(undefined, { style: 'currency', currency: 'USD' });
-      }
-      function recalc() {
-        let total = 0;
-        table.querySelectorAll('[data-line]').forEach(cell => {
-          const val = parseMoney(cell.innerText);
-          total += val;
-        });
-        const el = document.getElementById('grandTotal');
-        if (el) el.innerText = formatMoney(total);
-      }
-      table.addEventListener('input', recalc);
-      recalc();
-    })();
-  </script>
-</body>
-</html>
+      <div class="section">
+        <button class="collapse-btn">Project Tool Screenshots</button>
+        <div class
