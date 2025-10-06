@@ -111,16 +111,44 @@
     }
 
     
-     .section button.toggle-btn::after { /* ✅ ADDED CODE START (arrow indicator) */
-      content: "▶";
-      transition: transform 0.3s ease;
-      font-size: 1.2rem;
-    }
-    .section button.toggle-btn.active::after {
-      content: "▼";
-      transform: rotate(90deg);
-    } /* ✅ ADDED CODE END */
+/* toggle arrow indicator */
 
+.section button.toggle-btn {
+  width: 100%;
+  padding: 16px 20px;
+  text-align: left;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ensures space between text and arrow */
+}
+
+/* ✅ ADDED / UPDATED */
+.section button.toggle-btn::after {
+  content: "▶";
+  margin-left: auto;             /* pushes arrow to far right */
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+.section button.toggle-btn.active::after {
+  content: "▼";
+  transform: rotate(90deg);
+  color: var(--h2-color);
+}
+
+
+
+    
 
 
     .section button.toggle-btn:hover {
