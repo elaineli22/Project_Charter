@@ -6,558 +6,349 @@
   <title>Professional Cybersecurity Portfolio - Project Charter</title>
 
   <style>
-    /* === Base / Theme Variables === */
     :root {
-      --bg: #f5f7fa;
+      --bg: #f8fafc;
+      --text: #1e293b;
       --surface: #ffffff;
-      --text: #1a1a1a;
-      --muted: #555555;
-      --header-gradient-start: #006d77;
-      --header-gradient-end: #0077Be;
-      --h2-color: #005f73;
-      --h3-color: #0a9396;
-      --h4-color: #94d2bd;
-      --border: #dddddd;
-      --shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .dark {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --header-gradient-start: #22d3ee;
-      --header-gradient-end: #10b981;
-      --h2-color: #38bdf8;
-      --h3-color: #2dd4bf;
-      --h4-color: #94e2d5;
-      --border: #334155;
-      --shadow: 0 4px 12px rgba(0,0,0,0.4);
+      --border: #cbd5e1;
+      --teal: #0d9488;
+      --blue: #2563eb;
+      --accent: #14b8a6;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
 
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: "Inter", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+      margin: 0;
+      padding: 0;
     }
+
     .container {
-      max-width: 900px;
-      margin: 32px auto;
-      padding: 0 16px;
+      max-width: 950px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
     header {
-      position: relative;
-      background: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
+      background: linear-gradient(135deg, var(--blue), var(--teal));
       color: #fff;
-      padding: 40px 24px;
-      border-radius: 12px;
+      padding: 40px 30px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      text-align: center;
     }
+
     header h1 {
       margin: 0 0 8px;
-      font-size: 2.8rem;
+      font-size: 2.4rem;
+      font-weight: 800;
     }
+
     header p {
       margin: 0;
       opacity: 0.9;
     }
-    .header-actions {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      display: flex;
-      gap: 8px;
+
+    /* Expand / Collapse Buttons */
+    .controls {
+      text-align: center;
+      margin: 20px 0;
     }
+
     .btn {
-      background: rgba(255,255,255,0.2);
-      color: #fff;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
       border: none;
-      padding: 8px 12px;
-      border-radius: 999px;
+      color: #fff;
+      padding: 10px 18px;
+      margin: 4px;
+      border-radius: 8px;
       cursor: pointer;
-      backdrop-filter: blur(6px);
-      transition: background 0.2s, transform 0.2s;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow);
+      transition: 0.2s;
     }
+
     .btn:hover {
-      background: rgba(255,255,255,0.3);
+      opacity: 0.9;
       transform: translateY(-1px);
     }
 
-    .section {
+    /* Collapsible Sections */
+    details {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
+      margin-bottom: 16px;
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
       overflow: hidden;
-    }
-    .section button.toggle-btn {
-      width: 100%;
-      padding: 16px 20px;
-      text-align: left;
-      background: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .section button.toggle-btn:hover {
-      background: rgba(0,0,0,0.05);
-    }
-    .section button.toggle-btn.active {
-      /* optionally style active header differently */
-      color: var(--h2-color);
-    }
-    .section .content {
-      padding: 0 20px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.3s;
-    }
-    .section .content.open {
-      padding: 20px;
+      transition: all 0.3s ease;
     }
 
-    h2 { color: var(--h2-color); }
-    h3 { color: var(--h3-color); }
-    h4 { color: var(--h4-color); }
+    summary {
+      cursor: pointer;
+      padding: 18px 22px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--teal) 0%, var(--accent) 100%);
+      color: white;
+      user-select: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s ease;
+    }
+
+    details[open] summary {
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+    }
+
+    summary::after {
+      content: "▶";
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(90deg);
+      content: "▼";
+    }
+
+    details > div {
+      padding: 20px 24px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
 
     table {
-      width: 100%;
       border-collapse: collapse;
-      margin: 16px 0;
-    }
-    table th, table td {
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      text-align: left;
-    }
-    table th {
-      background: var(--header-gradient-start);
-      color: #fff;
-    }
-    table tr:nth-child(even) td {
-      background: rgba(0,0,0,0.03);
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 16px 0;
+      width: 100%;
+      margin: 14px 0;
     }
 
-    /* Utility for indenting nested lists etc. */
-    .indent { margin-left: 1.2em; }
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--blue);
+      color: #fff;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.95rem;
+      text-align: center;
+      color: #475569;
+    }
+
+    .note {
+      background: #ecfeff;
+      border-left: 4px solid var(--teal);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
     <header>
-      <div class="header-actions">
-        <button class="btn" id="themeToggle">🌙 Theme</button>
-        <button class="btn" onclick="window.print()">🖨️ Print</button>
-      </div>
       <h1>Professional Cybersecurity Portfolio</h1>
-      <p>Project Charter - Managing IT Projects Course</p>
+      <p>Project Charter — Managing IT Projects Course</p>
     </header>
 
-    <!-- Section: Student Information -->
-    <div class="section">
-      <button class="toggle-btn">👨‍🎓 Student Information</button>
-      <div class="content">
+    <div class="controls">
+      <button class="btn" id="expandAll">Expand All</button>
+      <button class="btn" id="collapseAll">Collapse All</button>
+    </div>
+
+    <!-- Student Info -->
+    <details>
+      <summary>👩‍🎓 Student Information</summary>
+      <div>
         <p><strong>Student Name:</strong> Elaine Li</p>
         <p><strong>Course:</strong> Managing IT Projects</p>
         <p><strong>Semester:</strong> Fall 2025</p>
       </div>
-    </div>
+    </details>
 
-    <!-- Section: Project Goal & Description -->
-    <div class="section">
-      
-      <button class="toggle-btn">📋 1. Project Goal & Description</button>
-     
-      <div class="content">
-        <p>Secure an entry-level job in cybersecurity/IT by building and showcasing a professional cybersecurity portfolio that highlights certifications, hands-on labs, LinkedIn Learning courses, and capstone course projects, demonstrating practical skills and workplace readiness.</p>
+    <!-- Project Goal (Always Expanded, No Arrow) -->
+    <details open>
+      <summary style="cursor: default; background: linear-gradient(90deg, var(--blue), var(--teal));">
+        📋 1. Project Goal & Description
+      </summary>
+      <div>
+        <p>
+          Secure an entry-level job in cybersecurity/IT by developing practical
+          cybersecurity skills and workplace readiness through certifications,
+          hands-on virtual labs, capstone project, and updating my
+          resume/LinkedIn profile.
+        </p>
       </div>
-    </div>
+    </details>
 
-    <!-- Section: Vision, Mission & Strategy Alignment -->
-    <div class="section">
-      <button class="toggle-btn">🎯 2. Vision, Mission & Strategy Alignment</button>
-      <div class="content">
+    <!-- Vision, Mission -->
+    <details>
+      <summary>🎯 2. Vision, Mission & Strategy Alignment</summary>
+      <div>
         <h4>Personal Mission Connection:</h4>
-        <p>My mission is to help organizations strengthen their networks, systems, and data by identifying vulnerabilities, implementing security measures, and responding to incidents. My goal is to protect sensitive data from data breaches and cyber threats while also ensuring integrity.</p>
-
+        <p>My mission is to help organizations strengthen their networks, systems, and data by identifying vulnerabilities, implementing security measures, and responding to incidents.</p>
         <h4>Vision Alignment:</h4>
-        <p>In the next 3-5 years, I envision myself working in the cybersecurity field with an organization that prioritizes data protection and risk management. Through continuous learning and hands-on experiences, I hope to have the opportunity to contribute to protecting personal and business information by developing incident response plans and implementing security measures for an organization.</p>
-
+        <p>In the next 3–5 years, I envision myself working in the cybersecurity field with an organization that prioritizes data protection and risk management.</p>
         <h4>Strategic Goal Support:</h4>
-        <p>This project advances my strategic goals of developing advanced cybersecurity skills, hands-on experience, and building a professional portfolio. By completing certifications, labs, and projects, I am not just improving my technical skills but also achievements that strengthen my career readiness for the IT/cybersecurity field. This supports my vision of becoming a cybersecurity professional who safeguards sensitive information and maintaining the integrity of digital assets.</p>
+        <p>This project advances my strategic goals of developing advanced cybersecurity skills and building a professional portfolio.</p>
       </div>
-    </div>
+    </details>
 
-    <!-- Section: Business Case & Justification -->
-    <div class="section">
-      <button class="toggle-btn">💼 3. Business Case & Justification</button>
-      <div class="content">
+    <!-- Business Case -->
+    <details>
+      <summary>💼 3. Business Case & Justification</summary>
+      <div>
         <h4>Professional Value:</h4>
-        <p>This project will benefit my career by allowing me to gain certifications, hands-on experience, and build a professional portfolio that demonstrates my cybersecurity skills to employers. These will help strengthen my resume and increase my opportunity for entry-level IT and cybersecurity positions.</p>
-
+        <p>This project will benefit my career by allowing me to gain certifications, hands-on experience, and build a professional portfolio that demonstrates my cybersecurity skills to employers.</p>
         <h4>Personal Value:</h4>
-        <p>This project will allow me to strengthen my problem-solving and critical thinking skills while applying my knowledge to real-world scenarios. Completing certifications, labs, and projects will give me a sense of accomplishment and confidence in my ability to contribute to cybersecurity solutions.</p>
-
+        <p>This project will allow me to strengthen my problem-solving and critical thinking skills while applying my knowledge to real-world scenarios.</p>
         <h4>Learning Outcomes:</h4>
-        <p>From this project, I will gain technical skills in identifying vulnerabilities, implementing security measures, and responding to incidents through my coursework. I will develop project management skills by setting timelines, breaking down sub-projects, and delivering goal-driven outcomes. I will deepen my knowledge of cybersecurity frameworks, tools, and best practices. These will help me be prepared for a cybersecurity career.</p>
+        <p>From this project, I will gain technical skills in identifying vulnerabilities, implementing security measures, and responding to incidents through my coursework.</p>
       </div>
-    </div>
+    </details>
 
-    <!-- Section: High-Level Scope -->
-    <div class="section">
-      <button class="toggle-btn">📏 4. High-Level Scope</button>
-      <div class="content">
+    <!-- High-Level Scope -->
+    <details>
+      <summary>📏 4. High-Level Scope</summary>
+      <div>
         <h4>✅ In Scope for Semester Project</h4>
         <ul>
-          <li>Complete at least one entry-level cybersecurity certification (e.g., Google Cybersecurity Professional Certificate, ISC2 CC, CompTIA Security+ etc.)</li>
-          <li>Complete hands-on virtual labs related to cybersecurity/IT field demonstrating technical skills (e.g. TryHackMe, etc.)</li>
-          <li>Complete selected LinkedIn Learning courses in cybersecurity/IT.</li>
+          <li>Complete at least one entry-level cybersecurity certification.</li>
+          <li>Complete hands-on virtual labs demonstrating technical skills.</li>
+          <li>Complete LinkedIn Learning cybersecurity courses.</li>
           <li>Complete Capstone Cybersecurity course project.</li>
         </ul>
-
-        <h4>🗺️ Roadmap Items (≤6 Months)</h4>
+        <h4>🗺️ Roadmap (≤6 Months)</h4>
         <ul>
-          <li>Pursue additional cybersecurity certifications</li>
-          <li>Build one additional visualization project in a different tool to expand skills.</li>
-          <li>Expand my portfolio with certifications and achievements.</li>
-          <li>Complete additional hands-on virtual labs / simulations</li>
-          <li>Update portfolio and add certifications on LinkedIn</li>
+          <li>Pursue additional certifications.</li>
+          <li>Expand portfolio with new achievements.</li>
         </ul>
-
         <h4>❌ Out of Scope</h4>
         <ul>
-          <li>Completion of international certifications requiring more than a year of preparation (e.g., CISSP, CISM)</li>
-          <li>Development of a full-scale enterprise security tool or application (requires extensive resources)</li>
-          <li>Creation of custom cybersecurity hardware (e.g., IoT penetration device)</li>
+          <li>CISSP/CISM certifications (require longer preparation).</li>
+          <li>Development of enterprise-level tools.</li>
         </ul>
       </div>
-    </div>
+    </details>
 
-    <!-- Section: Stakeholder Register -->
-    <div class="section">
-      <button class="toggle-btn">👥 5. Stakeholder Register</button>
-      <div class="content">
+    <!-- Stakeholder Register -->
+    <details>
+      <summary>👥 5. Stakeholder Register</summary>
+      <div>
         <table>
           <tr><th>Stakeholder</th><th>Category</th><th>Role/Interest</th><th>Power</th><th>Interest</th></tr>
-          <tr><td>Professors</td><td>Internal</td><td>Course evaluator, sets project expectations</td><td>High</td><td>High</td></tr>
-          <tr><td>Class Peers</td><td>Internal</td><td>Provide peer feedback & collaboration</td><td>Low</td><td>Medium</td></tr>
-          <tr><td>Academic Advisor</td><td>Internal</td><td>Guidance aligning coursework & career</td><td>Medium</td><td>High</td></tr>
-          <tr><td>Future Employers</td><td>External</td><td>End-users / hiring decision makers</td><td>High</td><td>High</td></tr>
-          <tr><td>Google (Certification Provider)</td><td>External</td><td>Provide certification framework/exam</td><td>High</td><td>Low</td></tr>
-          <tr><td>University Career Services</td><td>Internal</td><td>Support job placement & readiness</td><td>Medium</td><td>High</td></tr>
-          <tr><td>Personal Support System</td><td>External</td><td>Provide moral/emotional support</td><td>Low</td><td>Medium</td></tr>
-          <tr><td>LinkedIn</td><td>External</td><td>Networking / showcasing platform</td><td>Medium</td><td>Medium</td></tr>
+          <tr><td>Professors</td><td>Internal</td><td>Evaluator</td><td>High</td><td>High</td></tr>
+          <tr><td>Peers</td><td>Internal</td><td>Feedback/Collaboration</td><td>Low</td><td>Medium</td></tr>
+          <tr><td>Future Employers</td><td>External</td><td>Hiring Stakeholders</td><td>High</td><td>High</td></tr>
         </table>
-
-        <img src="Screenshot_2025-09-26_at_7.56.01_PM.png" alt="Power–Interest Grid">
+        <img src="Screenshot_2025-09-26_at_7.56.01_PM.png" alt="Power–Interest Grid Visualization" />
       </div>
-    </div>
+    </details>
 
-    <!-- Section: Deliverables -->
-    <div class="section">
-      <button class="toggle-btn">📦 6. Deliverables</button>
-      <div class="content">
+    <!-- Deliverables -->
+    <details>
+      <summary>📦 6. Deliverables</summary>
+      <div>
         <table>
-          <tr><th>Deliverable</th><th>Type</th><th>SMART Description</th><th>Definition of Done</th></tr>
-          <tr><td>Google Cybersecurity Professional Certificate</td><td>Tangible</td><td>Earn an entry-level certification by end of semester</td><td>Proof of certification completion</td></tr>
-          <tr><td>Hands-On Virtual Lab</td><td>Tangible</td><td>Complete guided hands-on lab by end of semester</td><td>Documented lab results & report</td></tr>
-          <tr><td>LinkedIn Learning Courses</td><td>Tangible</td><td>Complete cybersecurity courses by semester end</td><td>Certificates of completion added to portfolio</td></tr>
-          <tr><td>Capstone Cybersecurity Course Project</td><td>Tangible</td><td>Complete a cybersecurity related course project by semester end</td><td>Project documented & showcased</td></tr>
+          <tr><th>Deliverable</th><th>Type</th><th>Description</th><th>Definition of Done</th></tr>
+          <tr><td>Google Cybersecurity Certificate</td><td>Tangible</td><td>Earn by end of semester</td><td>Proof of completion</td></tr>
+          <tr><td>Hands-On Virtual Lab</td><td>Tangible</td><td>Complete guided simulation</td><td>Documented results</td></tr>
+          <tr><td>Capstone Project</td><td>Tangible</td><td>Submit final project</td><td>Showcase portfolio-ready work</td></tr>
         </table>
       </div>
-    </div>
+    </details>
 
-    <!-- Section: Work Breakdown Structure (WBS) -->
-    <div class="section">
-      <button class="toggle-btn">🧩 7. Work Breakdown Structure (WBS)</button>
-      <div class="content">
-        <h4>Deliverable 1 – Google Cybersecurity Certificate</h4>
-        <table>
-          <tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr>
-          <tr><td>1.0</td><td>Deliverable</td><td>Cybersecurity Certificate</td><td></td><td></td></tr>
-          <tr><td>1.1</td><td>Work Package</td><td>Planning & Preparation</td><td></td><td></td></tr>
-          <tr><td>1.1.1</td><td>Task</td><td>Research type of certification</td><td>2.0</td><td></td></tr>
-          <tr><td>1.1.2</td><td>Task</td><td>Select target certification</td><td>3.0</td><td>1.1.1</td></tr>
-          <tr><td>1.1.3</td><td>Task</td><td>Register exam & gather study materials</td><td>1.0</td><td>1.1.2</td></tr>
-          <tr><td>1.2</td><td>Work Package</td><td>Study & Training</td><td></td><td></td></tr>
-          <tr><td>1.2.1</td><td>Task</td><td>Develop study plan with milestones</td><td>3.0</td><td></td></tr>
-          <tr><td>1.2.2</td><td>Task</td><td>Complete training modules</td><td>3.0</td><td>1.2.1</td></tr>
-          <tr><td>1.2.3</td><td>Task</td><td>Create study notes & guides</td><td>2.0</td><td>1.2.2</td></tr>
-          <tr><td>1.3</td><td>Work Package</td><td>Practice & Assessment</td><td></td><td></td></tr>
-          <tr><td>1.3.1</td><td>Task</td><td>Complete practice quizzes</td><td>5.0</td><td></td></tr>
-          <tr><td>1.3.2</td><td>Task</td><td>Review & retake weak areas</td><td>5.0</td><td>1.3.1</td></tr>
-          <tr><td>1.4</td><td>Work Package</td><td>Exam Completion</td><td></td><td></td></tr>
-          <tr><td>1.4.1</td><td>Task</td><td>Final review before exam</td><td>2.0</td><td></td></tr>
-          <tr><td>1.4.2</td><td>Task</td><td>Take certification exam & pass</td><td>1.0</td><td>1.4.1</td></tr>
-          <tr><td>1.4.3</td><td>Task</td><td>Obtain proof & upload to portfolio</td><td>1.0</td><td>1.4.2</td></tr>
-        </table>
-
-        <h4>Deliverable 2 – Capstone Course Project</h4>
-        <table>
-          <tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr>
-          <tr><td>1.0</td><td>Deliverable</td><td>Capstone Course Project</td><td></td><td></td></tr>
-          <tr><td>1.1</td><td>Work Package</td><td>Project Planning</td><td></td><td></td></tr>
-          <tr><td>1.1.1</td><td>Task</td><td>Select project topic</td><td>3.0</td><td></td></tr>
-          <tr><td>1.1.2</td><td>Task</td><td>Define scope, objectives & requirements</td><td>3.0</td><td>1.1.1</td></tr>
-          <tr><td>1.1.3</td><td>Task</td><td>Develop timeline & milestones</td><td>3.0</td><td>1.1.2</td></tr>
-          <tr><td>1.2</td><td>Work Package</td><td>Research & Preparation</td><td></td><td></td></tr>
-          <tr><td>1.2.1</td><td>Task</td><td>Research risk assessment</td><td>5.0</td><td></td></tr>
-          <tr><td>1.2.2</td><td>Task</td><td>Define hazards, attacks, vulnerabilities</td><td>5.0</td><td>1.2.1</td></tr>
-          <tr><td>1.2.3</td><td>Task</td><td>Document mitigation plan</td><td>5.0</td><td>1.2.2</td></tr>
-          <tr><td>1.3</td><td>Work Package</td><td>Execution</td><td></td><td></td></tr>
-          <tr><td>1.3.1</td><td>Task</td><td>Identify critical business functions</td><td>5.0</td><td></td></tr>
-          <tr><td>1.3.2</td><td>Task</td><td>Develop recovery goals & requirements</td><td>4.0</td><td>1.3.1</td></tr>
-          <tr><td>1.3.3</td><td>Task</td><td>Document RPO & requirements</td><td>3.0</td><td>1.3.2</td></tr>
-          <tr><td>1.3.4</td><td>Task</td><td>Review & adjust project</td><td>2.0</td><td>1.3.3</td></tr>
-          <tr><td>1.4</td><td>Work Package</td><td>Progress Report</td><td></td><td></td></tr>
-          <tr><td>1.4.1</td><td>Task</td><td>Draft report</td><td>5.0</td><td></td></tr>
-          <tr><td>1.4.2</td><td>Task</td><td>Create resumption strategies</td><td>3.0</td><td>1.4.1</td></tr>
-          <tr><td>1.4.3</td><td>Task</td><td>Complete business function table</td><td>2.0</td><td>1.4.2</td></tr>
-          <tr><td>1.4.4</td><td>Task</td><td>Create employee contact list</td><td>1.0</td><td>1.4.3</td></tr>
-          <tr><td>1.4.5</td><td>Task</td><td>Create vendor contact list</td><td>1.0</td><td>1.4.4</td></tr>
-          <tr><td>1.4.6</td><td>Task</td><td>Family emergency plan</td><td>1.0</td><td>1.4.5</td></tr>
-          <tr><td>1.4.6</td><td>Task</td><td>Research insurance coverage</td><td>2.0</td><td>1.4.5</td></tr>
-          <tr><td>1.4.7</td><td>Task</td><td>Research cybersecurity tools</td><td>2.0</td><td>1.4.6</td></tr>
-        </table>
-
-        <h4>Deliverable 3 – Hands-On Virtual Lab</h4>
-        <table>
-          <tr><th>WBS ID</th><th>Level</th><th>Task Name</th><th>Duration (days)</th><th>Dependencies</th></tr>
-          <tr><td>1.0</td><td>Deliverable</td><td>Hands-On Virtual Lab</td><td></td><td></td></tr>
-          <tr><td>1.1</td><td>Work Package</td><td>Lab Preparation</td><td></td><td></td></tr>
-          <tr><td>1.1.1</td><td>Task</td><td>Review lab requirements & objectives</td><td>1.0</td><td></td></tr>
-          <tr><td>1.1.2</td><td>Task</td><td>Set up lab environment</td><td>2.0</td><td>1.1.1</td></tr>
-          <tr><td>1.1.3</td><td>Task</td><td>Verify access to tools/resources</td><td>2.0</td><td>1.1.2</td></tr>
-          <tr><td>1.2</td><td>Work Package</td><td>Lab Execution</td><td></td><td></td></tr>
-          <tr><td>1.2.1</td><td>Task</td><td>Initial configuration tasks</td><td>2.0</td><td></td></tr>
-          <tr><td>1.2.2</td><td>Task</td><td>Follow guided attack/defense scenario</td><td>3.0</td><td>1.2.1</td></tr>
-          <tr><td>1.2.3</td><td>Task</td><td>Capture evidence / screenshots</td><td>3.0</td><td>1.2.2</td></tr>
-          <tr><td>1.2.4</td><td>Task</td><td>Troubleshoot & repeat if errors</td><td>3.0</td><td>1.2.3</td></tr>
-          <tr><td>1.3</td><td>Work Package</td><td>Documentation</td><td></td><td></td></tr>
-          <tr><td>1.3.1</td><td>Task</td><td>Write summary of lab progress</td><td>2.0</td><td></td></tr>
-          <tr><td>1.3.2</td><td>Task</td><td>Document key findings</td><td>1.0</td><td>1.3.1</td></tr>
-          <tr><td>1.3.3</td><td>Task</td><td>Review lab report</td><td>2.0</td><td>1.3.2</td></tr>
-          <tr><td>1.4</td><td>Work Package</td><td>Lab Submission</td><td></td><td></td></tr>
-          <tr><td>1.4.1</td><td>Task</td><td>Proofread & finalize lab report</td><td>2.0</td><td></td></tr>
-          <tr><td>1.4.2</td><td>Task</td><td>Submit completed lab report</td><td>1.0</td><td>1.4.1</td></tr>
-        </table>
-      </div>
-    </div>
-
-    <!-- Section: Budget & Cost Estimate -->
-    <div class="section">
-      <button class="toggle-btn">💵 8. Budget & Cost Estimate</button>
-      <div class="content">
-        <table>
-          <tr><th>Cost Item</th><th>Quantity/Hours</th><th>Rate/Price</th><th>Total Cost</th></tr>
-          <tr><td colspan="4"><strong>👨‍💻 LABOR COSTS</strong></td></tr>
-          <tr><td>Cyber Security Analyst / Student Researcher</td><td>160</td><td>$35</td><td>$5,600</td></tr>
-          <tr><td>Designer</td><td>12</td><td>$8</td><td>$96</td></tr>
-          <tr><td>Project Manager</td><td>20</td><td>$60</td><td>$1,200</td></tr>
-          <tr><td><strong>LABOR SUBTOTAL</strong></td><td></td><td></td><td>$7,820</td></tr>
-
-          <tr><td colspan="4"><strong>💻 EQUIPMENT / SOFTWARE COSTS</strong></td></tr>
-          <tr><td>Software License (TryHackMe annual)</td><td>1</td><td>$80</td><td>$80</td></tr>
-          <tr><td>Cybersecurity Training Content & Certification</td><td>1</td><td>$0</td><td>$0</td></tr>
-          <tr><td><strong>EQUIPMENT/SOFTWARE SUBTOTAL</strong></td><td></td><td></td><td>$80</td></tr>
-
-          <tr><td colspan="4"><strong>📦 MATERIALS COSTS</strong></td></tr>
-          <tr><td>Training materials & documentation assets</td><td>1</td><td>$0</td><td>$0</td></tr>
-          <tr><td><strong>MATERIALS SUBTOTAL</strong></td><td></td><td></td><td>$0</td></tr>
-
-          <tr><td colspan="4"><strong>🛠 SERVICES COSTS</strong></td></tr>
-          <tr><td>Network Services & 3rd-Party APIs</td><td>1</td><td>$0</td><td>$0</td></tr>
-          <tr><td>Backup Storage (Cloud) 6 months</td><td>6</td><td>$2</td><td>$12</td></tr>
-          <tr><td><strong>SERVICES SUBTOTAL</strong></td><td></td><td></td><td>$12</td></tr>
-
-          <tr><td><strong>SUBTOTAL DIRECT COSTS</strong></td><td></td><td></td><td>$7,912</td></tr>
-          <tr><td><strong>Contingency Reserve 20%</strong></td><td></td><td></td><td>$1,582.40</td></tr>
-          <tr><td><strong>💰 TOTAL PROJECT BUDGET</strong></td><td></td><td></td><td>$9,494.40</td></tr>
-        </table>
-      </div>
-    </div>
-
-    <!-- Section: Project Methodology -->
-    <div class="section">
-      <button class="toggle-btn">🧭 9. Project Methodology (Hybrid: Incremental)</button>
-      <div class="content">
-      <p><strong>Requirements:</strong> Deliverables are well-defined (certificate, course project, hands-on lab)</p>
-    <p><strong>Delivery Cadence:</strong> To reduce any risk, the project is divided into three major releases instead of one final delivery.</p>
-    <ul>
-      <li><strong>Release 1 (Week 1-14):</strong> Submitted and Presented Course Project</li>
-      <li><strong>Release 2 (Week 5-8):</strong> Completed Certification</li>
-      <li><strong>Release 3 (Week 10-13):</strong> Completed Hands-On Lab</li>
-  
-    <p><strong>Why Hybrid?</strong> This approach allows me to adjust/adapt along the way which is ideal for a semester project with fixed requirements.</p>
-
-    <img src="Project_Method1.png"
-     alt="Project Methodology Diagram"
-     width="600"
-     loading="lazy">
-    
-  </div>
-</div>
-      <!-- Section: Release Schedule Diagram -->
-
-        <div class="section" id="release-schedule">
-      <button class="toggle-btn">Hybrid: Incremental Release Schedule</button>
-  <div class="content">
-    <div class="schedule" style="display:flex;justify-content:center;align-items:flex-start;gap:40px;flex-wrap:wrap;">
-      <div class="release" style="background:#add8e6;padding:20px 30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);position:relative;min-width:200px;text-align:left;">
-
-<!-- Section: feedback -->
-        <div class="feedback" style="position:absolute;top:-15px;right:-15px;background:#ff6b6b;color:#fff;font-size:12px;font-weight:bold;padding:5px 10px;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,0.2);">Feedback</div>
-
-        <h3 style="margin:0;color:#003366;text-align:center;">Release 1</h3>
-        <p style="margin:5px 0 10px;font-size:14px;color:#333;text-align:center;">Weeks 5–8</p>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
-          <li>Plan Cybersecurity Certificate</li>
-          <li>Train & Practice Materials</li>
-          <li>Complete Exam </li>
+    <!-- Methodology -->
+    <details>
+      <summary>🧭 7. Project Methodology (Hybrid)</summary>
+      <div>
+        <p><strong>Requirements:</strong> Deliverables are well-defined (certification, project, and lab).</p>
+        <p><strong>Delivery Cadence:</strong> Three incremental releases for flexibility and reduced risk.</p>
+        <ul>
+          <li><strong>Release 1 (Week 1–14):</strong> Course Project submission</li>
+          <li><strong>Release 2 (Week 5–8):</strong> Certification completion</li>
+          <li><strong>Release 3 (Week 10–13):</strong> Hands-On Lab completion</li>
         </ul>
+        <img src="Project_Method1.png" alt="Project Methodology Diagram" />
       </div>
-      <div class="arrow" style="font-size:24px;color:#666;margin-top:50px;">→</div>
-      <div class="release" style="background:#add8e6;padding:20px 30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);position:relative;min-width:200px;text-align:left;">
-        <div class="feedback" style="position:absolute;top:-15px;right:-15px;background:#ff6b6b;color:#fff;font-size:12px;font-weight:bold;padding:5px 10px;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,0.2);">Feedback</div>
-        <h3 style="margin:0;color:#003366;text-align:center;">Release 2</h3>
-        <p style="margin:5px 0 10px;font-size:14px;color:#333;text-align:center;">Weeks 1-14</p>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
-          <li>Plan & Research Course Project</li>
-          <li>Execute Project</li>
-          <li>Progress Report & Submit Project</li>
-        </ul>
-      </div>
-      <div class="arrow" style="font-size:24px;color:#666;margin-top:50px;">→</div>
-      <div class="release" style="background:#add8e6;padding:20px 30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);position:relative;min-width:200px;text-align:left;">
-        <div class="feedback" style="position:absolute;top:-15px;right:-15px;background:#ff6b6b;color:#fff;font-size:12px;font-weight:bold;padding:5px 10px;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,0.2);">Feedback</div>
-        <h3 style="margin:0;color:#003366;text-align:center;">Release 3</h3>
-        <p style="margin:5px 0 10px;font-size:14px;color:#333;text-align:center;">Weeks 10–13</p>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
-          <li>Prepare Lab Materials/Software</li>
-          <li>Execute & Perform Lab Stimulation</li>
-          <li>Document & Submit Lab Report</li>
-        </ul>
-      </div>
-    </div>
-    <div class="legend" style="margin-top:30px;font-size:14px;color:#333;text-align:center;">
-      
-    </div>
-  </div>
-</div>
+    </details>
 
-
-    <!-- Section: Tool Selection & Setup -->
-    <div class="section">
-      <button class="toggle-btn">🛠️ 10. Tool Selection & Setup</button>
-      <div class="content">
+    <!-- Tool Section -->
+    <details>
+      <summary>🛠️ 8. Tool Selection & Setup</summary>
+      <div>
         <h4>Tools Explored:</h4>
         <ul>
-          <li>Trello → Simple Kanban, but lacks dependencies</li>
-          <li>Monday.com → Flexible UI, supports hybrid & sprints</li>
-          <li>Jira → Agile-oriented with Scrum/Kanban, backlog management</li>
+          <li>Trello → Simple & flexible Kanban but lacks dependencies</li>
+          <li>Monday.com → Customizable UI, sprint planning, hybrid support</li>
+          <li>Jira → Agile-focused, best for large-scale Scrum teams</li>
         </ul>
-        <p><strong>Final Choice: Monday.com</strong></p>
-        <p>Monday.com supports hybrid methodology by enabling structured releases and sprints while using feedback cycles. It’s more customizable than Trello, more versatile than Jira, and has a free plan that fits a semester project.</p>
-         <ul>
-      <li>More customizable than Trello</li>
-      <li>More versatile than Jira</li>
-      <li>Free basic plan that works for semester project</li>
-    </ul>
+        <p><strong>Final Choice:</strong> Monday.com (supports hybrid methodology and incremental tracking).</p>
+        <img src="Google_Cert2.png" alt="Google Cybersecurity Certificate" />
+        <img src="Google_PRO_Cert.png" alt="Google PRO Certificate" />
+        <img src="Course_Pro_3.png" alt="Capstone Course Screenshot" />
+      </div>
+    </details>
 
-    <h4>Key Features Supporting My Project</h4>
-    <ul>
-      <li>Scrum/Kanban boards → Organize work and track progress visually.</li>
-      <li>Backlog management → Prioritize tasks and schedule into sprints/releases.</li>
-      <li>Sprint planning &amp; reporting → Align with Hybrid methodology feedback cycles.</li>
-      <li>Customizable workflows → Create and modify releases (certification, course project, hands-on lab) into phases with feedback loops.</li>
-    </ul>
-
-    
-    </ul>
+    <!-- Footer -->
+    <footer>
+      <div class="note">
+        <strong>📝 Note:</strong> This Project Charter will expand to include Risk Register, Acceptance Criteria, Execution Plan, and Project Manager Authority as the semester progresses.
+      </div>
+      <p>© 2025 Elaine Li — Managing IT Projects Portfolio</p>
+    </footer>
   </div>
-</div>
-
-    <!-- Section: Project Tool Screenshot -->
-    <div class="section">
-      <button class="toggle-btn">📷 Project Tool Screenshot</button>
-      <div class="content">
-      <p>This screenshot shows my Monday.com project setup.</p>
-    <img src="Google_Cert2.png"
-     alt="Google Cybersecurity Certificate"
-     width="600"
-     loading="lazy"> 
-    <br>
-    <img src="Google_PRO_Cert.png"
-       alt="Google Cybersecurity PRO Certificate"
-       width="600"
-       loading="lazy">
-    <br>
-    <img src="Course_Pro_3.png"
-       alt="Course Project"
-       width="600"
-       loading="lazy">
-      </div>
-    </div>
-
-    <!-- Section: Additional Charter Components -->
-    <div class="section">
-      <button class="toggle-btn">📝 Additional Charter Components</button>
-      <div class="content">
-        <p>Note for Future Updates: This charter will be expanded throughout the semester as we cover additional project management components including:</p>
-        <ul>
-          <li>Project Methodology Selection</li>
-          <li>Deliverables & Definition of Done</li>
-          <li>High-Level Timeline & Milestones</li>
-          <li>Execution Plan Overview</li>
-          <li>Risk Register</li>
-          <li>Acceptance Criteria</li>
-          <li>Project Manager Authority & Approvals</li>
-        </ul>
-        <p>Keep this HTML file — you’ll be adding to it as the semester progresses!</p>
-      </div>
-    </div>
-
-  </div> <!-- end .container -->
 
   <script>
-    // Theme toggle
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      document.body.classList.toggle('dark');
+    // Expand / Collapse All
+    const allDetails = document.querySelectorAll("details");
+    document.getElementById("expandAll").addEventListener("click", () => {
+      allDetails.forEach((det) => {
+        det.open = true;
+      });
     });
-
-    // Collapsible logic
-    document.querySelectorAll('.section button.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const sec = btn.parentElement;
-        const content = sec.querySelector('.content');
-        btn.classList.toggle('active');
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-          content.classList.remove('open');
-        } else {
-          content.style.maxHeight = content.scrollHeight + 'px';
-          content.classList.add('open');
-        }
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      allDetails.forEach((det) => {
+        if (!det.querySelector("summary").textContent.includes("Project Goal"))
+          det.open = false;
       });
     });
   </script>
 </body>
 </html>
+
+
+
+
+
+
 
