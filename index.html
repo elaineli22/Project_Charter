@@ -109,6 +109,20 @@
       border-bottom: 1px solid var(--border);
       transition: background 0.2s;
     }
+
+    
+     .section button.toggle-btn::after { /* ✅ ADDED CODE START (arrow indicator) */
+      content: "▶";
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+    .section button.toggle-btn.active::after {
+      content: "▼";
+      transform: rotate(90deg);
+    } /* ✅ ADDED CODE END */
+
+
+
     .section button.toggle-btn:hover {
       background: rgba(0,0,0,0.05);
     }
@@ -126,6 +140,63 @@
       padding: 20px;
     }
 
+
+     /* ✅ ADDED CODE START (Expand/Collapse Buttons + TOC Styles) */
+    .controls {
+      text-align: center;
+      margin: 16px 0;
+    }
+    .controls .btn {
+      background: linear-gradient(90deg, var(--header-gradient-start), var(--header-gradient-end));
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 4px;
+      transition: background 0.2s;
+    }
+     .controls .btn:hover {
+      background: linear-gradient(90deg, var(--header-gradient-end), var(--header-gradient-start));
+    }
+    .toc {
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+    .toc h3 {
+      margin: 0;
+      padding: 10px 14px;
+      background: linear-gradient(90deg, var(--header-gradient-start), var(--header-gradient-end));
+      color: white;
+      border-radius: 8px 8px 0 0;
+    }
+    .toc ul {
+      margin: 0;
+      list-style: none;
+      padding: 10px 18px;
+       }
+    .toc li {
+      padding: 6px 0;
+    }
+    .toc a {
+      text-decoration: none;
+      color: var(--header-gradient-end);
+      font-weight: 600;
+    }
+    .toc a:hover {
+      color: var(--header-gradient-start);
+      text-decoration: underline;
+    }
+    /* ✅ ADDED CODE END */
+
+
+
+
+    
     h2 { color: var(--h2-color); }
     h3 { color: var(--h3-color); }
     h4 { color: var(--h4-color); }
@@ -170,6 +241,14 @@
       <p>Project Charter - Managing IT Projects Course</p>
     </header>
 
+
+      <!-- ✅ ADDED CODE START (Expand/Collapse Buttons) -->
+    <div class="controls">
+      <button class="btn" id="expandAll">Expand All</button>
+      <button class="btn" id="collapseAll">Collapse All</button>
+    </div>
+    <!-- ✅ ADDED CODE END -->
+
     <!-- Section: Student Information -->
     <div class="section">
       <button class="toggle-btn">👨‍🎓 Student Information</button>
@@ -181,7 +260,23 @@
     </div>
 
 <!-- Table of Contents -->
- 
+   <!-- ✅ ADDED CODE START (Table of Contents) -->
+        <div class="toc">
+          <h3>📘 Table of Contents</h3>
+          <ul>
+            <li><a href="#goal">📋 1. Project Goal & Description</a></li>
+            <li><a href="#vision">🎯 2. Vision, Mission & Strategy Alignment</a></li>
+            <li><a href="#business">💼 3. Business Case & Justification</a></li>
+            <li><a href="#scope">📏 4. High-Level Scope</a></li>
+            <li><a href="#stakeholders">👥 5. Stakeholder Register</a></li>
+            <li><a href="#deliverables">📦 6. Deliverables</a></li>
+            <li><a href="#wbs">🧩 7. Work Breakdown Structure (WBS)</a></li>
+            <li><a href="#budget">💵 8. Budget & Cost Estimate</a></li>
+            <li><a href="#methodology">🧭 9. Project Methodology</a></li>
+            <li><a href="#tools">🛠️ 10. Tool Selection & Setup</a></li>
+          </ul>
+        </div>
+        <!-- ✅ ADDED CODE END -->
 
     
     <!-- Section: Project Goal & Description -->
